@@ -1,0 +1,17 @@
+***********
+new project
+***********
+
+npm init
+npm i -D typescript
+tsc --init
+"ES2015","DOM" in lib
+
+.\node_modules\.bin\tsc -w
+node bin/file.js
+
+
+
+////////////////////////////
+npx -p typescript tsc --init
+////////////////////////////
