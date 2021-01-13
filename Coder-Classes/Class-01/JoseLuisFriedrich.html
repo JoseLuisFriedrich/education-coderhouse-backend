@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>José Luis Friedrich</title>
+</head>
+
+<body>
+
+  <script>
+    //Functional
+    function FCUser(firstName, lastName, books, pets) {
+      this.firstName = firstName
+      this.lastName = lastName
+      this.books = books
+      this.pets = pets
+    }
+    FCUser.prototype.getFullName = function () { return `${this.firstName} ${this.lastName}` }
+    FCUser.prototype.addBook = function (name, author) { this.books.push({ name, author }) }
+    FCUser.prototype.getBooks = function () { return this.books.map(b => b.name) }
+    FCUser.prototype.addPet = function (pet) { this.pets.push(pet) }
+    FCUser.prototype.getPets = function () { return this.pets.length }
+
+    //Class
+    class CUser {
+      constructor(firstName, lastName, books, pets) {
+        this.firstName = firstName
+        this.lastName = lastName
+        this.books = books
+        this.pets = pets
+      }
+
+      getFullName = () => `${this.firstName} ${this.lastName}`
+      addBook = (name, author) => this.books.push({ name, author })
+      getBooks = () => this.books.map(b => b.name)
+      addPet = (pet) => this.pets.push(pet)
+      getPets = () => this.pets.length
+    }
+
+    //Objects
+    const objects = [
+      new FCUser('José Luis', 'Friedrich', [{ name: 'Book1', author: 'Connell' }], ['Bailey', 'Molly', 'Tucker']),
+      new CUser('José Luis', 'Friedrich', [{ name: 'Book1', author: 'Connell' }], ['Bailey', 'Molly', 'Tucker'])
+    ]
+
+    //Results
+    console.clear()
+    objects.forEach(obj => {
+      result = {}
+
+      obj.addPet('Elon')
+      obj.addBook('Book2', 'Colton')
+
+      result['getFullName'] = obj.getFullName()
+      result['getBooks'] = obj.getBooks()
+      result['getPets'] = obj.getPets()
+      console.log(result)
+    })
+  </script>
+
+</body>
+
+</html>
