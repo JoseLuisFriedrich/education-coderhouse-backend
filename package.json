@@ -18,7 +18,6 @@
   "homepage": "https://github.com/JoseLuisFriedrich/coderhouse-backend#readme",
   "dependencies": {},
   "devDependencies": {
-    "typescript": "^4.1.3",
-    "ts-node-dev": "^1.1.1"
+    "typescript": "^4.1.3"
   }
 }

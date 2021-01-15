@@ -1,0 +1,26 @@
+*******************
+new project (local)
+*******************
+
+npm init
+npm i -D typescript
+tsc --init
+"ES2015" in target
+"ES2015","DOM" in lib
+
+.\node_modules\.bin\tsc -w
+node bin/Class-02/Challenge
+
+*********************
+new project (no deps)
+*********************
+
+npx -p typescript tsc --init
+npx -p typescript tsc -w
+node bin/Class-02/Challenge
+
+****
+Test
+****
+npx ts-node-dev --respawn Coder-Classes\Class-02\Challenge\Challenge.ts
+
