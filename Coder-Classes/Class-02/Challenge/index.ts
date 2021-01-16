@@ -1,24 +1,26 @@
 const operation = (number1: number, number2: number, operator: string): Promise<number> => {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     let operationModule: string
 
     switch (operator) {
       case '+':
-        operationModule = './Operation_Addition.js'
+        operationModule = './Operation_Addition'
         break
       case '-':
-        operationModule = './Operation_Subtraction.js'
+        operationModule = './Operation_Subtraction'
         break
       default:
         throw new Error('incorrect operator')
     }
 
-    import(operationModule).then(response => resolve(new response.Operation(number1, number2).Result()))
+    const module = await import(operationModule)
+    const result = new module.Operation(number1, number2).Result()
+    resolve(result)
   })
 }
 
 const operations = async () => {
-  const addition: number = await operation(2, 2, '+')
+  const addition: number = await operation(4, 2, '+')
   const substraction: number = await operation(4, 2, '-')
 
   console.log('+ =>', addition)
