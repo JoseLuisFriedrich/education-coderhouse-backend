@@ -26,14 +26,19 @@
       mirroredText.textContent = text
 
       if (pressedKeys.length >= 5) {
-        if (pressedKeys.slice(0, 5).join('') === 'rorre') { //error
+        let text = pressedKeys.slice(0, 5).join('')
+        if (text === 'rorre') { //error
           subscription.error('error')
         }
 
-        if (pressedKeys.length >= 8 && pressedKeys.slice(0, 8).join('') === 'etelpmoc') { //complete
-          subscription.complete()
+        if (pressedKeys.length >= 8) { //complete
+          text = pressedKeys.slice(0, 8).join('')
+          if (text === 'etelpmoc') {
+            subscription.complete()
+          }
         }
       }
+
     }, reject => {
       console.log(reject)
       unsubscribeAndClear()
@@ -44,7 +49,7 @@
     setTimeout(() => {
       console.log('unsubscribed')
       unsubscribeAndClear()
-    }, 10 * 1000)
+    }, 20 * 1000)
 
     const unsubscribeAndClear = () => {
       subscription.unsubscribe()

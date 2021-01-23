@@ -15,25 +15,38 @@
     'use strict'
 
     import { fromEvent } from 'https://dev.jspm.io/rxjs@6/_esm2015'
+    import { map, filter } from 'https://dev.jspm.io/rxjs@6/_esm2015/operators'
 
     const observable = fromEvent(input, 'keyup')
     const pressedKeys = []
 
-    const subscription = observable.subscribe(event => {
-      pressedKeys.unshift(event.key)
+    const subscription = observable.pipe(
+      filter(event => {
+        if (event.which <= 90 && event.which >= 48 || event.which === 32) {
+          return event
+        }
+      }),
+      map(event => event.key)
+    ).subscribe(key => {
+      pressedKeys.unshift(key)
 
       const text = pressedKeys.join('')
       mirroredText.textContent = text
 
       if (pressedKeys.length >= 5) {
-        if (pressedKeys.slice(0, 5).join('') === 'rorre') { //error
+        let text = pressedKeys.slice(0, 5).join('')
+        if (text === 'rorre') { //error
           subscription.error('error')
         }
 
-        if (pressedKeys.length >= 8 && pressedKeys.slice(0, 8).join('') === 'etelpmoc') { //complete
-          subscription.complete()
+        if (pressedKeys.length >= 8) { //complete
+          text = pressedKeys.slice(0, 8).join('')
+          if (text === 'etelpmoc') {
+            subscription.complete()
+          }
         }
       }
+
     }, reject => {
       console.log(reject)
       unsubscribeAndClear()
@@ -44,7 +57,7 @@
     setTimeout(() => {
       console.log('unsubscribed')
       unsubscribeAndClear()
-    }, 10 * 1000)
+    }, 20 * 1000)
 
     const unsubscribeAndClear = () => {
       subscription.unsubscribe()
