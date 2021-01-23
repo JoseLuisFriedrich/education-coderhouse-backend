@@ -1,6 +1,6 @@
 const showLetters = async (text: string, delay: number = 1000, callback?: Function) => {
   const letters: Array<string> = text.split('')
-  const id: number = setInterval(() => {
+  const id = setInterval(() => {
     console.log(letters.shift())
 
     if (!letters.length) {

@@ -1,0 +1,26 @@
+
+***********
+new project
+***********
+
+cd Class-02
+
+npm init                                                    Creates package.json
+npm i -D typescript nodemon                                 Install
+
+"scripts": {
+  "compile": "tsc && node ../bin",
+  "start": "nodemon -e ts --exec \"npm run compile\""
+},
+
+npm start
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+***********
+stand-alone
+***********
+
+npx -p typescript tsc --init
+npx -p typescript tsc -w
+node ../bin
