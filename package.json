@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --config nodemon.json Coder-Classes/Class-03/Challenge/index.ts",
-    "dev:debug": "nodemon --config nodemon.json --inspect-brk Coder-Classes/Class-03/Challenge/index.ts"
+//    "start": "nodemon --config nodemon.json Coder-Classes/Class-03/Challenge/index.ts",
+//    "dev:debug": "nodemon --config nodemon.json --inspect-brk Coder-Classes/Class-03/Challenge/index.ts"
+      "start": "webpack-dev-server --mode development"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,9 @@
     "url": "https://github.com/JoseLuisFriedrich/coderhouse-backend/issues"
   },
   "homepage": "https://github.com/JoseLuisFriedrich/coderhouse-backend#readme",
-  "dependencies": {},
+  "dependencies": {
+    "rxjs": "^6.6.3"
+  },
   "devDependencies": {
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
