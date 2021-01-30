@@ -1,21 +1,15 @@
-GET http://localhost:8000
+GET http://localhost:8080
 
 ###
 
-POST http://localhost:8000/products
-content-type: application/json
-
-{
-    "name": "Handcrafted Cotton Gloves",
-    "price": 123
-}
+GET http://localhost:8080/items
 
 ###
 
-GET http://localhost:8000/products
+GET http://localhost:8080/item-random
 
 ###
 
-DELETE http://localhost:8000/products/1
+GET http://localhost:8080/visits
 
 ###

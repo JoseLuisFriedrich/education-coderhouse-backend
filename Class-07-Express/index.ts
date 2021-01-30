@@ -1,49 +1,46 @@
 import express, { Application, Request, Response } from 'express'
+import fs from 'fs'
 
-const PORT = 8000
+const PORT = 8080
 const app: Application = express()
 
 app.use(express.json())
+app.listen(PORT, () => console.log(`⚡️ http://localhost:${PORT}`))
+app.get('/', (req: Request, res: Response) => res.send(`⚡️ http://localhost:${PORT}`))
 
 interface Product {
   id: number
   name: string
-  price: number
+  quantity: number
 }
 
-let products: Array<Product> = [
-  { id: 1, name: 'Refined Steel Table', price: 45 },
-  { id: 2, name: 'Awesome Soft Gloves', price: 45 },
-  { id: 3, name: 'Fantastic Fresh Towels', price: 45 },
-]
+let items: Array<Product> = []
 
-const addProduct = (product: Product) => {
-  products = [...products, product]
-  console.log(products)
-  return product
+let itemsCount: number = 0
+let itemCount: number = 0
+
+const init = () => {
+  if (items.length === 0) {
+    const fileItems: string = fs.readFileSync('./db.txt', 'utf-8')
+    items = JSON.parse(fileItems)
+  }
 }
 
-app.post('/products', (req: Request, res: Response) => {
-  const id = products.length + 1
-  const { name, price } = req.body
-  //console.log(body)
-
-  const result = addProduct({ id, name, price })
-  res.status(200).send(result)
+app.get('/items', (req: Request, res: Response) => {
+  init()
+  itemsCount++
+  const response = { items, itemCount: items.length }
+  res.status(200).send(response)
 })
 
-app.get('/products', (req: Request, res: Response) => {
-  res.status(200).send(products)
+app.get('/item-random', (req: Request, res: Response) => {
+  init()
+  itemCount++
+  const response = { item: items[Math.floor(Math.random() * items.length)] }
+  res.status(200).send(response)
 })
 
-app.delete('/products/:id', (req: Request, res: Response) => {
-  const { id } = req.params
-  products = products.filter(p => p.id !== Number(id))
-  res.status(200).send(products)
-})
-
-app.get('/', (req: Request, res: Response) => res.send('Express + TypeScript Server'))
-
-app.listen(PORT, () => {
-  console.log(`⚡️ http://localhost:${PORT}`)
+app.get('/visits', (req: Request, res: Response) => {
+  const response = { visits: { items: itemsCount, item: itemCount } }
+  res.status(200).send(response)
 })
