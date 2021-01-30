@@ -1,0 +1,21 @@
+GET http://localhost:8000
+
+###
+
+POST http://localhost:8000/products
+content-type: application/json
+
+{
+    "name": "Handcrafted Cotton Gloves",
+    "price": 123
+}
+
+###
+
+GET http://localhost:8000/products
+
+###
+
+DELETE http://localhost:8000/products/1
+
+###

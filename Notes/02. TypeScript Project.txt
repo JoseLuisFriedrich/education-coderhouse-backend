@@ -1,0 +1,33 @@
+
+**************
+new typescript
+instalation
+**************
+
+cd Class-06-FileSystem
+
+npm init                                                                                  Creates package.json
+npm i -D typescript @types/node nodemon                                                   Install
+
+"scripts": {
+  "compile": "tsc && node ../bin",
+  "start": "nodemon -e ts --exec \"npm run compile\""
+},
+
+tsconfig.json
+
+npm start
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+***********
+new typescript
+stand-alone
+***********
+
+(test before using it)
+
+npx -p typescript tsc --init
+npx -p typescript tsc -w
+node ../bin
+tsconfig.json
