@@ -44,7 +44,7 @@ class FileClass {
   }
 }
 
-const file: FileClass = new FileClass('D:/products.txt')
+const file: FileClass = new FileClass('../bin/products.txt')
 file.showInConsole()
 file.append({ title: 'Generic Wooden Towels', price: 123.45 })
 file.append({ title: 'Gorgeous Rubber Chair', price: 678.99 })
