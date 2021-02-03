@@ -1,5 +1,5 @@
 
-# There's not products available
+# There're not products available
 GET http://localhost:8080/products
 ###
 

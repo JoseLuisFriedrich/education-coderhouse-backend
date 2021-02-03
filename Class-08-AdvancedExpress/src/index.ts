@@ -1,5 +1,4 @@
 import express, { Application, Request, Response } from 'express'
-// const products = require('./products')
 import products from './products'
 
 const PORT = 8080

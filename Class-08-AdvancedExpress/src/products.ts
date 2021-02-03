@@ -11,7 +11,7 @@ export const products = (app: Application) => {
   let products: Array<Product> = []
 
   app.get('/products', (req: Request, res: Response) => {
-    if (!products.length) res.status(404).send({ error: "there's not products available" })
+    if (!products.length) res.status(404).send({ error: "there're not products available" })
 
     res.status(200).send(products)
   })
