@@ -16,13 +16,6 @@ export const products = (app: Application) => {
     res.status(200).send(products)
   })
 
-  app.post('/products', (req: Request, res: Response) => {
-    let product: Product = { id: products.length + 1, ...req.body }
-    products = [...products, product]
-
-    res.status(200).send(product)
-  })
-
   app.get('/products/:id', (req: Request, res: Response) => {
     const id = req.params.id
     const product = products.find(p => p.id === Number(id))
@@ -30,6 +23,20 @@ export const products = (app: Application) => {
     if (!product) res.status(404).send({ error: 'product not found' })
     res.status(201).send(product)
   })
+
+  app.post('/products', (req: Request, res: Response) => {
+    let product: Product = { id: products.length + 1, ...req.body }
+    products = [...products, product]
+
+    res.status(200).send(product)
+  })
+
+  // app.patch('/products', (req: Request, res: Response) => {
+  //   let product: Product = { id: products.length + 1, ...req.body }
+  //   products = [...products, product]
+
+  //   res.status(200).send(product)
+  // })
 }
 
 export default products
