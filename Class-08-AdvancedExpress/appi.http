@@ -1,0 +1,26 @@
+
+# There's not products available
+GET http://localhost:8080/products
+###
+
+# Add new Product
+POST http://localhost:8080/products
+content-type: application/json
+
+{
+    "title": "Incredible Frozen Bacon",
+    "price": 12,
+    "thumbnail": "http://www.bacon.com"
+}
+###
+
+# List Products
+GET http://localhost:8080/products
+###
+
+# ProductById Not Found
+GET http://localhost:8080/products/0
+###
+
+# ProductById
+GET http://localhost:8080/products/1

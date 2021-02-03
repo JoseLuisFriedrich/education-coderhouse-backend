@@ -1,0 +1,18 @@
+
+cd Class-08-AdvancedExpress
+
+npx -p typescript tsc --init
+
+npm init
+npm i express
+npm i -D typescript @types/node nodemon @types/express ts-node
+
+tsconfig.json -> "target": "es6"
+
+package.json
+
+"start": "nodemon src/index.ts"
+
+create 
+
+npm start
