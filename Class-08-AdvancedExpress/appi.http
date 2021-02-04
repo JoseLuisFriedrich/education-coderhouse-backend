@@ -25,27 +25,3 @@ GET http://localhost:8080/products/0
 # ProductById
 GET http://localhost:8080/products/1
 ###
-
-# Update
-PUT http://localhost:8080/products
-content-type: application/json
-
-{
-    "id": 2,
-    "title": "Updated Incredible Frozen Bacon",
-    "price": 99,
-    "thumbnail": "http://www.bacon.com"
-}
-###
-
-# Partial Update
-PATCH  http://localhost:8080/products/2/price
-content-type: application/json
-
-{
-    "price": 999
-}
-###
-
-# Delete
-DELETE  http://localhost:8080/products/2

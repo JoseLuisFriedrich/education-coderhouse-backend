@@ -43,43 +43,6 @@ export const products = (app: Application) => {
 
     res.status(201).send(product)
   })
-
-  app.put('/products', (req: Request, res: Response) => {
-    const updated: Product = { ...req.body }
-
-    const productIndex = products.findIndex(p => p.id === updated.id)
-    if (~productIndex) {
-      products[productIndex] = updated
-      res.status(200).send()
-    } else {
-      res.status(404).send({ error: 'product not found' })
-    }
-  })
-
-  app.patch('/products/:id/price', (req: Request, res: Response) => {
-    const id = req.params.id
-    const { price } = req.body
-
-    const product = get(id)
-    if (product) {
-      product.price = price
-      res.status(200).send()
-    } else {
-      res.status(404).send({ error: 'product not found' })
-    }
-  })
-
-  app.delete('/products/:id', (req: Request, res: Response) => {
-    const id = req.params.id
-
-    const product = get(id)
-    if (product) {
-      products = products.filter(p => p.id !== Number(id))
-      res.status(200).send()
-    } else {
-      res.status(404).send({ error: 'product not found' })
-    }
-  })
 }
 
 export default products
