@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>José Luis Friedrich</title>
+</head>
+
+<body>
+
+  <form action='/upload' enctype="multipart/form-data" method="POST">
+    <input type='file' name='file'><br>
+    <input type='submit' value='Submit'>
+  </form>
+
+</body>
+
+</html>
+
+///////////////////////////////////////////////////////////////////////////
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+import express, { Router } from 'express'
+
+import multer from 'multer'
+
+const router: Router = express.Router()
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now())
+  },
+})
+
+const upload = multer({ storage: storage })
+
+router.post('/', upload.single('file'), (req, res, next) => {
+  const file = req.file
+
+  if (!file) {
+    const error = new Error('Please upload a file')
+    // error.httpStatusCode = 400
+    return next(error)
+  }
+
+  res.send(file)
+})
+
+export default router
