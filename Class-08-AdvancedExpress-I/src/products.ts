@@ -21,9 +21,11 @@ export const products = (app: Application) => {
   }
 
   app.get('/products', (req: Request, res: Response) => {
-    if (!products.length) res.status(404).send({ error: "there're not products available" })
-
-    res.status(200).send(products)
+    if (products.length) {
+      res.status(200).send(products)
+    } else {
+      res.status(404).send({ error: "there're not products available" })
+    }
   })
 
   app.get('/products/:id', (req: Request, res: Response) => {

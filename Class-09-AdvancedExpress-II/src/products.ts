@@ -11,7 +11,7 @@ interface Product {
 
 let products: Array<Product> = []
 
-const get = (id: string) => {
+const get = (id: string): Product | null => {
   const product = products.find(p => p.id === Number(id))
 
   if (product) {
@@ -26,15 +26,17 @@ router.get('/', (req: Request, res: Response) => {
 })
 
 router.get('/products', (req: Request, res: Response) => {
-  if (!products.length) res.status(404).send({ error: "there're not products available" })
-
-  res.status(200).send(products)
+  if (products.length) {
+    res.status(200).send(products)
+  } else {
+    res.status(404).send({ error: "there're not products available" })
+  }
 })
 
 router.get('/products/:id', (req: Request, res: Response) => {
   const id = req.params.id
+  const product: Product | null = get(id)
 
-  const product = get(id)
   if (product) {
     res.status(200).send(product)
   } else {
@@ -43,9 +45,7 @@ router.get('/products/:id', (req: Request, res: Response) => {
 })
 
 router.post('/products', (req: Request, res: Response) => {
-  const { title, price, thumbnail } = req.body
-  const product: Product = { id: products.length + 1, title, price: Number(price), thumbnail }
-  // const product: Product = { id: products.length + 1, ...req.body }
+  const product: Product = { id: products.length + 1, ...req.body }
   products = [...products, product]
 
   res.status(201).send(product)
@@ -53,11 +53,11 @@ router.post('/products', (req: Request, res: Response) => {
 
 router.put('/products', (req: Request, res: Response) => {
   const updated: Product = { ...req.body }
-
   const productIndex = products.findIndex(p => p.id === updated.id)
+
   if (~productIndex) {
     products[productIndex] = updated
-    res.status(200).send()
+    res.status(200).send(updated)
   } else {
     res.status(404).send({ error: 'product not found' })
   }
@@ -65,12 +65,12 @@ router.put('/products', (req: Request, res: Response) => {
 
 router.patch('/products/:id/price', (req: Request, res: Response) => {
   const id = req.params.id
-  const { price } = req.body
+  const product: Product | null = get(id)
 
-  const product = get(id)
   if (product) {
+    const { price } = req.body
     product.price = price
-    res.status(200).send()
+    res.status(200).send(product)
   } else {
     res.status(404).send({ error: 'product not found' })
   }
@@ -78,11 +78,11 @@ router.patch('/products/:id/price', (req: Request, res: Response) => {
 
 router.delete('/products/:id', (req: Request, res: Response) => {
   const id = req.params.id
+  const product: Product | null = get(id)
 
-  const product = get(id)
   if (product) {
     products = products.filter(p => p.id !== Number(id))
-    res.status(200).send()
+    res.status(200).send(product)
   } else {
     res.status(404).send({ error: 'product not found' })
   }
