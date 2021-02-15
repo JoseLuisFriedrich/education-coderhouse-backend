@@ -1,0 +1,8 @@
+ejs/hbs son buenos para quien viene de javascript, y son fáciles de migrar.
+
+pero pug es mi preferido si hay tiempo para aprenderlo y empezar de cero.
+es de fácil lectura, y minimiza los errores.
+programadores que vengan de python están acostumbrados al identado, y manejo de yaml.
+en caso de armar alguna herramienta visual para armar las páginas, armar archivos yml es mucho más simple.
+
+

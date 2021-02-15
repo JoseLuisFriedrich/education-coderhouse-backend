@@ -1,0 +1,19 @@
+if hasProducts
+  table(class='table table-primary')
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Title
+        th(scope='col') Price
+        th(scope='col') Thumbnail
+    tbody
+      each product in products
+        tr
+          td=product.id
+          td=product.title
+          td=product.price
+          td
+            img(src=product.thumbnail)
+
+else
+  div(class='alert alert-primary', role='alert') There're not products available
