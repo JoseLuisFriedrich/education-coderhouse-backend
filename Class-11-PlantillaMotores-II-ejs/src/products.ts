@@ -13,17 +13,8 @@ export let products: Array<Product> = []
 
 const get = (id: string): Product | null => {
   const product = products.find(p => p.id === Number(id))
-
-  if (product) {
-    return product
-  } else {
-    return null
-  }
+  return product ? product : null
 }
-
-router.get('/', (req: Request, res: Response) => {
-  res.status(200).send('products')
-})
 
 router.get('/', (req: Request, res: Response) => {
   if (products.length) {
@@ -45,14 +36,11 @@ router.get('/:id', (req: Request, res: Response) => {
 })
 
 router.post('/', (req: Request, res: Response) => {
-  const product: Product = { id: products.length + 1, ...req.body }
+  const id = products.reduce((acc, shot) => (acc = acc > shot.id ? acc : shot.id), 0) + 1
+  const product: Product = { id, ...req.body }
   products = [...products, product]
 
-  //res.status(201).send(product)
-  res.writeHead(302, {
-    Location: '/products/view',
-  })
-  res.end()
+  res.status(201).send(product)
 })
 
 router.put('/', (req: Request, res: Response) => {

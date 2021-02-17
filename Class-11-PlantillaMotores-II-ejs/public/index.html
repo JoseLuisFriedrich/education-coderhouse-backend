@@ -6,11 +6,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+
   <title>José Luis Friedrich</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="index.js"></script>
 </head>
 
 <body>
-  <form action='/products/api' enctype="application/x-www-form-urlencoded" method="POST">
+  <form id='mainForm' action='/products/api' enctype="application/x-www-form-urlencoded" method="POST">
     <label for="title">Title</label>
     <input type="text" id="title" name="title" placeholder="Title">
 
@@ -25,12 +29,8 @@
       <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fried-chicken-thigh-fast-food-512.png">Chicken</option>
     </select>
 
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" onclick="">
   </form>
-
-  <script>
-    document.getElementById("title").focus();
-  </script>
 </body>
 
 </html>
