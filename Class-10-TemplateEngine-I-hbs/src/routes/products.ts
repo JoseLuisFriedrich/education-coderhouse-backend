@@ -36,7 +36,7 @@ router.get('/:id', (req: Request, res: Response) => {
 })
 
 router.post('/', (req: Request, res: Response) => {
-  const id = products.reduce((acc, shot) => (acc = acc > shot.id ? acc : shot.id), 0) + 1
+  const id = products.reduce((acc, prod) => (acc = acc > prod.id ? acc : prod.id), 0) + 1
   const product: Product = { id, ...req.body }
   products = [...products, product]
 
