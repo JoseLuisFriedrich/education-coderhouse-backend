@@ -1,4 +1,9 @@
 import express, { Application } from 'express'
+import * as socketio from 'socket.io'
+import * as httpLib from 'http'
+
+import productsApi from './routes/products'
+//import productsIo from './routes/products.io'
 
 const PORT = 8080
 const app: Application = express()
@@ -7,12 +12,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
-// Hay alguna más simple de hacer los imports y pasarle los argumentos?
-;(async () => {
-  const http = new (await import('http')).Server(app)
-  const io = new (await import('socket.io')).Server(http)
+const http = new httpLib.Server(app)
+const io = new socketio.Server(http)
 
-  ;(await import('./routes')).default(app, io)
+//Routing
+app.use('/products/api', productsApi(io))
 
-  http.listen(PORT, () => console.log(`⚡️ http://localhost:${PORT}`))
-})()
+//productsIo(io)
+
+//http
+http.listen(PORT, () => console.log(`⚡️ http://localhost:${PORT}`))

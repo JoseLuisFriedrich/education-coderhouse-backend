@@ -9,10 +9,11 @@ $(document).on('submit', 'form', function (e) {
     const title = document.querySelector('#title')
     const price = document.querySelector('#price')
     const thumb = document.querySelector('#thumbnail')
-    socket.emit('product', data)
+    // socket.emit('product', data)
 
     title.value = ''
     price.value = ''
+    thumb.selectedIndex = 0
     title.focus()
   }).fail(() => {
     alert('Error')
