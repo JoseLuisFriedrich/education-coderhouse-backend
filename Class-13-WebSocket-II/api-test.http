@@ -1,0 +1,56 @@
+
+# There're not products available
+GET http://localhost:8080/products/api
+###
+
+# Add new Product
+POST http://localhost:8080/products/api
+content-type: application/json
+
+{
+    "title": "Incredible Frozen Bacon",
+    "price": 12,
+    "thumbnail": "https://cdn1.iconfinder.com/data/icons/transport-3-11/32/Excavator-2-512.png"
+}
+###
+
+# List Products
+GET http://localhost:8080/products/api
+###
+
+# ProductById Not Found
+GET http://localhost:8080/products/api/0
+###
+
+# ProductById
+GET http://localhost:8080/products/api/1
+###
+
+# Update
+PUT http://localhost:8080/products/api
+content-type: application/json
+
+{
+    "id": 2,
+    "title": "Updated Incredible Frozen Bacon",
+    "price": 99,
+    "thumbnail": "http://www.bacon.com"
+}
+###
+
+# Partial Update
+PATCH  http://localhost:8080/products/api/2/price
+content-type: application/json
+
+{
+    "price": 999
+}
+
+###
+
+# Delete
+DELETE  http://localhost:8080/products/api/3
+###
+
+# List Products
+GET http://localhost:8080/products/api
