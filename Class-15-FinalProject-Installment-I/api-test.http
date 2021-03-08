@@ -1,0 +1,77 @@
+# USER Get
+GET http://localhost:8080/user/api
+###
+
+# USER Patch isAdmin
+PATCH  http://localhost:8080/user/api/d08ad47f-59ae-4153-a7c0-4a8f7c178bd2/isAdmin
+content-type: application/json
+
+{
+    "isAdmin": false
+}
+
+###
+
+# CART Get
+GET http://localhost:8080/cart/api
+###
+
+# CART Post
+POST http://localhost:8080/cart/api/1
+###
+
+# PRODUCT There're not products available
+GET http://localhost:8080/products/api
+###
+
+# PRODUCT Add new Product
+POST http://localhost:8080/products/api
+content-type: application/json
+
+{
+    "title": "Incredible Frozen Bacon",
+    "price": 12,
+    "thumbnail": "https://cdn1.iconfinder.com/data/icons/transport-3-11/32/Excavator-2-512.png"
+}
+###
+
+# PRODUCT List Products
+GET http://localhost:8080/products/api
+###
+
+# PRODUCT ProductById Not Found
+GET http://localhost:8080/products/api/0
+###
+
+# PRODUCT ProductById
+GET http://localhost:8080/products/api/1
+###
+
+# PRODUCT Update
+PUT http://localhost:8080/products/api
+content-type: application/json
+
+{
+    "id": 2,
+    "title": "Updated Incredible Frozen Bacon",
+    "price": 99,
+    "thumbnail": "http://www.bacon.com"
+}
+###
+
+# PRODUCT Partial Update
+PATCH  http://localhost:8080/products/api/2/price
+content-type: application/json
+
+{
+    "price": 999
+}
+
+###
+
+# PRODUCT Delete
+DELETE  http://localhost:8080/products/api/3
+###
+
+# PRODUCT List Products
+GET http://localhost:8080/products/api
