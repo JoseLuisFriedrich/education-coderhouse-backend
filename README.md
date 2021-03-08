@@ -17,5 +17,7 @@ npm i
 
 # Extensiones VS Code
 
-MySQL (cweijan.vscode-mysql-client2) para ejecutar *.sql
-REST Client (humao.rest-client) para ejecutar api-test.http
+| Extensión   | Id                           | Utilidad
+|-------------|------------------------------|----------------------------
+| MySQL       | cweijan.vscode-mysql-client2 | Ejecutar *.sql
+| REST Client | humao.rest-client            | Ejecutar api-test.http
