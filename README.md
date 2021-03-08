@@ -10,8 +10,7 @@ La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets
 
 ```
 git clone https://github.com/JoseLuisFriedrich/coderhouse-backend
-cd coderhouse-backend
-cd Class-15-FinalProject-Installment-I
+cd coderhouse-backend\Class-15-FinalProject-Installment-I
 npm i
 ```
 
