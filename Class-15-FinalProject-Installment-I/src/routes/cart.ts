@@ -30,11 +30,13 @@ const cartRouter = (io: any) => {
   router.get('/', (req: Request, res: Response) => {
     const cart: Cart = get(req)
 
-    if (cart.products.length) {
-      res.status(200).send(cart)
-    } else {
-      res.status(404).send({ error: "there're not products in the cart" })
-    }
+    res.status(200).send(cart)
+
+    // if (cart.products.length) {
+    //   res.status(200).send(cart)
+    // } else {
+    //   res.status(404).send({ error: "there're not products in the cart" })
+    // }
   })
 
   router.get('/:id', (req: Request, res: Response) => {
@@ -68,31 +70,6 @@ const cartRouter = (io: any) => {
 
     res.status(201).send(cart)
   })
-
-  // router.put('/', (req: Request, res: Response) => {
-  //   const updated: Product = { ...req.body }
-  //   const productIndex = products.findIndex(p => p.id === updated.id)
-
-  //   if (~productIndex) {
-  //     products[productIndex] = updated
-  //     res.status(200).send(updated)
-  //   } else {
-  //     res.status(404).send({ error: 'product not found' })
-  //   }
-  // })
-
-  // router.patch('/:id/price', (req: Request, res: Response) => {
-  //   const id = req.params.id
-  //   const product: Product | null = get(id)
-
-  //   if (product) {
-  //     const { price } = req.body
-  //     product.price = price
-  //     res.status(200).send(product)
-  //   } else {
-  //     res.status(404).send({ error: 'product not found' })
-  //   }
-  // })
 
   router.delete('/:id', (req: Request, res: Response) => {
     const id = req.params.id

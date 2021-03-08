@@ -10,6 +10,15 @@ $(document).ready(() => {
       get('#user-user').value = payload.id
       get('#user-isAdmin').checked = payload.isAdmin
       get('#chat-user').value = payload.id
+
+      // Cart
+      $.ajax({
+        url: `/cart/api`,
+        type: 'get',
+        success: (payload) => {
+          refreshCart(payload)
+        }
+      })
     },
     error: (xhr, ajaxOptions, thrownError) => {
       alert(`${xhr.status} -> ${thrownError}`)
@@ -62,7 +71,6 @@ socket.on('chat', payload => {
 // Product
 
 let firstTimeProduct = true
-// let firstTimeCart = true
 
 $(document).on('submit', '#productForm', function (e) {
   e.preventDefault()
@@ -101,6 +109,30 @@ $(document).on('click', '#product-delete', function (e) {
   })
 })
 
+const refreshCart = (payload) => {
+  if (!payload.products.length) return
+
+  get('#cart-id').value = payload.id
+
+  const template = $('#template-cart-table').html()
+  $('#cart').replaceWith(template)
+  $('#cart-row').html('')
+
+  //row template
+  payload.products.forEach(product => {
+    //row template
+    const domTemplate = $('#template-cart-row').html()
+    const template = Handlebars.compile(domTemplate)
+    const dom = template(product)
+
+    $('#cart-row').append(dom)
+  })
+
+  $('html, body').animate({
+    scrollTop: $("#cartTitle").offset().top
+  }, 100);
+}
+
 $(document).on('click', '#product-cart', function (e) {
   const id = Number($(e.target).closest('tr').find('td').html())
 
@@ -108,25 +140,7 @@ $(document).on('click', '#product-cart', function (e) {
     url: `/cart/api/${id}`,
     type: 'post',
     success: (payload) => {
-      get('#cart-id').value = payload.id
-
-      const template = $('#template-cart-table').html()
-      $('#cart').replaceWith(template)
-      $('#cart-row').html('')
-
-      //row template
-      payload.products.forEach(product => {
-        //row template
-        const domTemplate = $('#template-cart-row').html()
-        const template = Handlebars.compile(domTemplate)
-        const dom = template(product)
-
-        $('#cart-row').append(dom)
-      })
-
-      $('html, body').animate({
-        scrollTop: $("#cartTitle").offset().top
-      }, 100);
+      refreshCart(payload)
     },
     error: (xhr, ajaxOptions, thrownError) => {
       alert(`${xhr.status} -> ${thrownError}`)
