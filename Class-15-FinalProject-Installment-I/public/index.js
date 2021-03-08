@@ -9,7 +9,7 @@ $(document).ready(() => {
     success: (payload) => {
       get('#user-user').value = payload.id
       get('#user-isAdmin').checked = payload.isAdmin
-      get('#chat-user').value = payload.id
+      get('#chat-user').value = payload.username
 
       // Cart
       $.ajax({
@@ -128,9 +128,9 @@ const refreshCart = (payload) => {
     $('#cart-row').append(dom)
   })
 
-  $('html, body').animate({
-    scrollTop: $("#cartTitle").offset().top
-  }, 100);
+  // $('html, body').animate({
+  //   scrollTop: $("#cartTitle").offset().top
+  // }, 100);
 }
 
 $(document).on('click', '#product-cart', function (e) {
@@ -164,5 +164,23 @@ socket.on('products', payload => {
     const dom = template(product)
 
     $('#product-row').append(dom)
+  })
+})
+
+// Cart
+
+$(document).on('click', '#cart-delete', function (e) {
+  const id = Number($(e.target).closest('tr').find('td').html())
+
+  $.ajax({
+    url: `/cart/api/${id}`,
+    type: 'delete',
+    success: (payload) => {
+      //console.log(payload)
+      $(e.target).closest('tr').remove()
+    },
+    error: (xhr, ajaxOptions, thrownError) => {
+      alert(`${xhr.status} -> ${thrownError}`)
+    }
   })
 })

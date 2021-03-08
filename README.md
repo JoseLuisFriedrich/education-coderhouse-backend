@@ -18,5 +18,5 @@ npm i
 
 | Extensión   | Id                           | Utilidad
 |-------------|------------------------------|----------------------------
-| MySQL       | cweijan.vscode-mysql-client2 | Ejecutar *.sql
-| REST Client | humao.rest-client            | Ejecutar api-test.http
+| MySQL       | cweijan.vscode-mysql-client2 | Ejecutar archivos script.sql
+| REST Client | humao.rest-client            | Ejecutar archivos api-test.http

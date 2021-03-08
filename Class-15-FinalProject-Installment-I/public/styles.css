@@ -18,7 +18,7 @@ html {
 /* UI */
 
 div {
-  max-width: 90rem;
+  max-width: 95rem;
   margin: 0 auto 0 auto;
 }
 
@@ -33,15 +33,21 @@ table {
   cursor: pointer;
 }
 
+.flexcontainer {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
 span,
 p {
-  font-size: 2.5rem;
+  font-size: 2rem;
   line-height: 2;
   font-weight: 700;
 }
 
 h3 {
-  font-size: 7rem;
+  font-size: 5rem;
   position: relative;
   /* left: -700px; */
 }
@@ -49,7 +55,8 @@ h3 {
 /* Sections */
 
 section {
-  padding: 17rem 0 20rem 0;
+  /* padding: 17rem 0 20rem 0; */
+  padding: 2rem 0 2rem 0;
   border-top: 0.6rem solid #000;
   border-left: 0.6rem solid #000;
   border-right: 0.6rem solid #000;

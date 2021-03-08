@@ -67,25 +67,33 @@
 
   <section class="products">
     <div>
-      <h3 id='productTitle'>CRUD Productos</h3>
+      <h3 id='productTitle'>Productos</h3>
 
-      <form id='productForm' action='/products/api' enctype="application/x-www-form-urlencoded" method="POST">
-        <input type="text" id="title" name="title" placeholder="Título" required>
-        <input type="text" id="price" name="price" placeholder="Precio" required>
-        <select id="thumbnail" name="thumbnail">
-          <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/hamburger-fast-food-patty-bread-512.png">Hamburguesa</option>
-          <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fruit-organic-plant-orange-vitamin-512.png">Naranja</option>
-          <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/shrimp-prawn-seafood-animal-marine-512.png">Camarón</option>
-          <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fried-chicken-thigh-fast-food-512.png">Pollo</option>
-        </select>
-        <input type="submit" value="Añadir Producto">
+      <div class="flexcontainer">
 
-        <div id="products">
-          <div class="alert alert-primary" role="alert">
-            No hay productos disponibles
+        <div>
+          <form id='productForm' action='/products/api' enctype="application/x-www-form-urlencoded" method="POST">
+
+            <input type="text" id="title" name="title" placeholder="Título" required>
+            <input type="text" id="price" name="price" placeholder="Precio" required>
+            <select id="thumbnail" name="thumbnail">
+              <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/hamburger-fast-food-patty-bread-512.png">Hamburguesa</option>
+              <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fruit-organic-plant-orange-vitamin-512.png">Naranja</option>
+              <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/shrimp-prawn-seafood-animal-marine-512.png">Camarón</option>
+              <option value="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fried-chicken-thigh-fast-food-512.png">Pollo</option>
+            </select>
+            <input type="submit" value="Añadir Producto">
+
+          </form>
+        </div>
+        <div>
+          <div id="products">
+            <div class="alert alert-primary" role="alert">
+              No hay productos disponibles
+            </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </section>
 
@@ -94,13 +102,13 @@
       <h3 id='cartTitle'>Carrito</h3>
 
       <form>
-        <input type="text" id="cart-id" name="cart-id" placeholder="ID del Carrito" disabled>
-
         <div id="cart">
           <div class="alert alert-primary" role="alert">
             El carrito no se ha inicializado
           </div>
         </div>
+
+        <input type="text" id="cart-id" name="cart-id" placeholder="ID del Carrito" disabled>
       </form>
     </div>
   </section>
@@ -134,8 +142,8 @@
           <th scope="col">Título</th>
           <th scope="col">Precio</th>
           <th scope="col">Imagen</th>
-          <th scope="col">Eliminar</th>
-          <th scope="col">Agregar</th>
+          <th scope="col">Eliminar<br>Producto</th>
+          <th scope="col">Agregar<br>Carrito</th>
         </tr>
       </thead>
       <tbody id='product-row' />
@@ -174,6 +182,7 @@
           <th scope="col">Precio</th>
           <th scope="col">Imagen</th>
           <th scope="col">Cantidad</th>
+          <th scope="col">Eliminar<br>de Carrito</th>
         </tr>
       </thead>
       <tbody id='cart-row' />
@@ -187,6 +196,7 @@
       <td>$ {{this.price}}</td>
       <td><img src="{{this.thumbnail}}"></td>
       <td>{{this.quantity}}</td>
+      <td><i id="cart-delete" name="cart-delete" class="fas fa-trash-alt icon"></i></td>
     </tr>
   </script>
 
