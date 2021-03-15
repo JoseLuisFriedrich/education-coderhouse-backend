@@ -1,11 +1,11 @@
 import knex from 'knex'
 
-import { Product } from '../interfaces/product'
+import { IProduct } from '../interfaces/product'
 import dbConfig from '../config/db.mysql'
 
-export const productGetAll = async (): Promise<Array<Product>> => {
+export const productGetAll = async (): Promise<Array<IProduct>> => {
   const conn = knex(dbConfig())
-  let data = new Array<Product>()
+  let data = new Array<IProduct>()
 
   try {
     data = await conn.from('products')
@@ -18,7 +18,7 @@ export const productGetAll = async (): Promise<Array<Product>> => {
   return data
 }
 
-export const productInsert = async (product: Product) => {
+export const productInsert = async (product: IProduct) => {
   const conn = knex(dbConfig())
 
   try {

@@ -1,11 +1,11 @@
 import knex from 'knex'
 
-import { Message } from '../interfaces/chat'
+import { IMessage } from '../interfaces/chat'
 import dbConfig from '../config/db.sqllite3'
 
-export const messageGet = async (): Promise<Array<Message>> => {
+export const messageGet = async (): Promise<Array<IMessage>> => {
   const conn = knex(dbConfig())
-  let data = new Array<Message>()
+  let data = new Array<IMessage>()
 
   try {
     data = await conn.from('messages')
@@ -18,7 +18,7 @@ export const messageGet = async (): Promise<Array<Message>> => {
   return data
 }
 
-export const messageInsert = async (message: Message) => {
+export const messageInsert = async (message: IMessage) => {
   const conn = knex(dbConfig())
 
   try {

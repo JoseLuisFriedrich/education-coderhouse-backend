@@ -15,16 +15,6 @@ select {
   box-sizing: border-box;
 }
 
-/* input[type='submit'] {
-  padding: 10px 20px;
-  font-weight: 700;
-  color: #fff;
-  border: none;
-  background: #ff576b;
-  cursor: pointer;
-  margin-right: 2rem;
-} */
-
 input[type='submit'] {
   width: 100%;
   background-color: #403de4;

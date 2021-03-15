@@ -1,8 +1,8 @@
-import { Message } from '../interfaces/chat'
+import { IMessage } from '../interfaces/chat'
 import * as db from '../models/chat'
 import { products } from './../controllers/productController'
 
-let messages: Array<Message> = []
+let messages: Array<IMessage> = []
 
 ;(async () => {
   messages = await db.messageGet()
@@ -13,7 +13,7 @@ export const messageSend = (io: any, socket: any) => {
 
   if (products.length > 0) socket.emit('products', products)
 
-  socket.on('chat', (message: Message) => {
+  socket.on('chat', (message: IMessage) => {
     message.date = new Date().toLocaleTimeString()
 
     //add

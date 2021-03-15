@@ -1,6 +1,6 @@
 import { Product } from './product'
 
-export interface Cart {
+export interface ICart {
   id: string
   timestamp: string
   products: Array<Product>

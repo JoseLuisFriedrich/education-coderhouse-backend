@@ -39,6 +39,14 @@ table {
   width: 100%;
 }
 
+.productTable {
+  width: 500px;
+}
+
+#productForm {
+  width: 80%;
+}
+
 span,
 p {
   font-size: 2rem;
