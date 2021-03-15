@@ -4,9 +4,9 @@ import * as socketio from 'socket.io'
 import * as httpLib from 'http'
 
 import cartApi from './routes/cart'
+import chatIo from './routes/chat'
 import productsApi from './routes/product'
 import userApi from './routes/user'
-import chatIo from './routes/chat'
 
 const PORT = 8080
 const app: Application = express()
@@ -20,7 +20,7 @@ const http = new httpLib.Server(app)
 const io = new socketio.Server(http)
 
 //Routing
-app.use('/cart/api', cartApi(io))
+app.use('/cart/api', cartApi())
 app.use('/products/api', productsApi(io))
 app.use('/user/api', userApi())
 

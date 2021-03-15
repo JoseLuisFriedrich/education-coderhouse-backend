@@ -1,8 +1,8 @@
 import { unlink } from 'fs'
 import knex from 'knex'
 
-import mySqlConfig from './mysql.db'
-import sqLite3Config from './sqllite3.db'
+import mySqlConfig from '../config/db.mysql'
+import sqLite3Config from '../config/db.sqllite3'
 
 const dbName = 'jlf_coder_backend'
 
@@ -47,5 +47,5 @@ const createSchema = async (config, isSqLite) => {
   }
 }
 
-createSchema(sqLite3Config, true)
-createSchema(mySqlConfig, false)
+createSchema(sqLite3Config(), true)
+createSchema(mySqlConfig(false), false)

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "db": "nodemon src/database/setup/index.ts"
+    "db": "ts-node src/scripts/db.ts"
   },
   "author": "",
   "license": "ISC",
