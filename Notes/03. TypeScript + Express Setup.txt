@@ -9,6 +9,6 @@ npm i -D typescript @types/node nodemon @types/express ts-node
 
 tsconfig.json -> "target": "es6"
 
-package.json -> "start": "nodemon src/index.ts"
+package.json -> "dev": "nodemon src/index.ts"
 
 npm start

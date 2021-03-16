@@ -1,0 +1,12 @@
+use('jlf_coderhouse_backend');
+
+db.test.drop();
+
+db.test.insertMany([
+  {  'name': 'fideos', 'category': 'harina', 'stock': 20 },
+  {  'name': 'leche', 'category': 'lácteos', 'stock': 30 },
+  {  'name': 'crema', 'category': 'lácteos', 'stock': 15 },
+]);
+
+db.test.find()
+db.test.find({ 'category': 'lácteos' });

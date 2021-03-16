@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
     "ServerES6toJS5": "babel src/index.es6.js -o ../bin/index.es6.js",
     "ServerTStoJS5": "tsc && node ../bin/index.js"
   },
