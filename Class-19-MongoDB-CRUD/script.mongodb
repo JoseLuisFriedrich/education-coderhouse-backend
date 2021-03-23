@@ -1,0 +1,61 @@
+use('jlf_coderhouse_backend')
+
+db.dropDatabase()
+
+// Messages
+
+db.createCollection('messages')
+db.messages.insertMany([
+  { 'user': 'jose', 'text': 'mensaje 1', 'date': ISODate('2021-09-25T13:00:00.000Z') },
+  { 'user': 'luis', 'text': 'mensaje 2', 'date': ISODate('2021-09-25T13:00:00.000Z') },
+])
+
+// Products
+
+db.createCollection('products')
+db.products.insertMany([
+  { 'title': 'Producto 1', 'price':  120, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/hamburger-fast-food-patty-bread-512.png' },
+  { 'title': 'Producto 2', 'price':  580, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fruit-organic-plant-orange-vitamin-512.png' },
+  { 'title': 'Producto 3', 'price':  900, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/shrimp-prawn-seafood-animal-marine-512.png' },
+  { 'title': 'Producto 4', 'price': 1280, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fried-chicken-thigh-fast-food-512.png' },
+  { 'title': 'Producto 5', 'price': 1700, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/hamburger-fast-food-patty-bread-512.png' },
+  { 'title': 'Producto 6', 'price': 2300, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fruit-organic-plant-orange-vitamin-512.png' },
+  { 'title': 'Producto 7', 'price': 3350, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/shrimp-prawn-seafood-animal-marine-512.png' },
+])
+
+// Show all documents
+
+db.messages.find()
+db.products.find()
+
+// Count
+
+db.messages.count()
+db.products.count()
+
+// CRUD products
+
+// C
+db.products.insertOne({ 'title': 'Producto 8', 'price': 4320, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fried-chicken-thigh-fast-food-512.png' })
+db.products.find()
+
+// R
+db.products.find({ 'title': 'Producto 8' })
+db.products.find({ 'price': {$lt: 1000} })
+db.products.find({ 'price': {$gt: 3000} })
+db.products.find({}).sort({'price': 1}).skip(2).limit(1)
+
+// no me funciona esta consulta, 'unknown operator $and', qué puede ser?
+db.products.find({ 'price': {$and: [{$gt: 1000}, {$lt: 3000}]} })
+
+// U
+db.products.updateMany({}, {$set : {'stock': 100}})
+db.products.updateMany({ 'price': {$gt: 4000} }, {$set : {'stock': 0}})
+
+// R
+db.products.deleteMany({ 'price': {$lt: 1000} })
+
+// User
+
+use('admin')
+db.createUser({'user': 'pepe', 'pwd': 'asd456', roles: [{role: 'read', db: 'jlf_coderhouse_backend'}]})
