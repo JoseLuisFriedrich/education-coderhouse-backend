@@ -28,16 +28,16 @@ export const cartGet = (req: Request, res: Response) => {
   res.status(200).send(cart)
 }
 
-export const cartGetById = (req: Request, res: Response) => {
-  const id = req.params.id
-  const product: IProduct | null = getProduct(req, id)
+// export const cartGetById = (req: Request, res: Response) => {
+//   const id = req.params.id
+//   const product: IProduct | null = getProduct(req, id)
 
-  if (product) {
-    res.status(200).send(product)
-  } else {
-    res.status(404).send({ error: 'product not found in cart' })
-  }
-}
+//   if (product) {
+//     res.status(200).send(product)
+//   } else {
+//     res.status(404).send({ error: 'product not found in cart' })
+//   }
+// }
 
 export const cartInsert = (req: Request, res: Response) => {
   const id = Number(req.params.id)

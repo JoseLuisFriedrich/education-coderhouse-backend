@@ -4,9 +4,16 @@ Proyecto del curso Coderhouse BackEnd.
 	
 # Descripción
 
-La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets, Template Engines (HBS, EJS, PUG), MySQL:
+La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets, Template Engines (HBS, EJS, PUG), DataBase (MySQL, SQLite3, MongoDB):
 
-# Ejemplo Setup Windows
+# .env
+
+| Configuración       | Descripción
+|---------------------|------------------------------
+| DB_CONNECTION       | Connection string MongoDB
+| APP_PORT            | Puerto Node.js
+
+# Setup (Windows)
 
 ```
 git clone https://github.com/JoseLuisFriedrich/coderhouse-backend

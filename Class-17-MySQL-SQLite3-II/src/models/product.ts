@@ -3,7 +3,7 @@ import knex from 'knex'
 import { IProduct } from '../interfaces/product'
 import dbConfig from '../config/db.mysql'
 
-export const productGetAll = async (): Promise<Array<IProduct>> => {
+export const productGet = async (): Promise<Array<IProduct>> => {
   const conn = knex(dbConfig())
   let data = new Array<IProduct>()
 

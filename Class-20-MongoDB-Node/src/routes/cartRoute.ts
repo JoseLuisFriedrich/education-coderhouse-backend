@@ -1,11 +1,11 @@
 import express, { Router } from 'express'
-import * as cartController from './../controllers/cartController'
+
+import * as cartController from '../controllers/cartController'
 
 const cartRouter = () => {
   const router: Router = express.Router()
 
   router.get('/', cartController.cartGet)
-  // router.get('/:id', cartController.cartGetById)
   router.post('/:id', cartController.cartInsert)
   router.delete('/:id', cartController.cartDelete)
 

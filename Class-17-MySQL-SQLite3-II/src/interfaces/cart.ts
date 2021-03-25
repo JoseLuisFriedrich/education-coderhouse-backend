@@ -1,7 +1,7 @@
-import { Product } from './product'
+import { IProduct } from './product'
 
 export interface ICart {
   id: string
   timestamp: string
-  products: Array<Product>
+  products: Array<IProduct>
 }

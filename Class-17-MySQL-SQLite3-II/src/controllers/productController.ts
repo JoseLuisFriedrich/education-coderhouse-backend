@@ -5,7 +5,7 @@ import { IProduct } from '../interfaces/product'
 
 export let products: Array<IProduct> = []
 ;(async () => {
-  products = await db.productGetAll()
+  products = await db.productGet()
 })()
 
 // Helpers

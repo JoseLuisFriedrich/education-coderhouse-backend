@@ -1,0 +1,58 @@
+  # router.patch('/:id/price', productController.productUpdatePrice)
+  # router.delete('/:id', productController.productDelete)
+
+# PRODUCT ProductGet (There're not products available)
+GET http://localhost:8080/products/api
+###
+
+# PRODUCT ProductById (Not Found)
+GET http://localhost:8080/products/api/0
+###
+
+# PRODUCT Add new Product
+POST http://localhost:8080/products/api
+content-type: application/json
+
+{
+    "title": "Incredible Frozen Bacon",
+    "price": 12,
+    "thumbnail": "https://cdn1.iconfinder.com/data/icons/transport-3-11/32/Excavator-2-512.png"
+}
+###
+
+# PRODUCT List Products
+GET http://localhost:8080/products/api
+###
+
+# PRODUCT ProductGetById
+GET http://localhost:8080/products/api/1
+###
+
+# PRODUCT Update
+PUT http://localhost:8080/products/api
+content-type: application/json
+
+{
+    "id": 1,
+    "title": "Updated Incredible Frozen Bacon",
+    "price": 99,
+    "thumbnail": "https://cdn1.iconfinder.com/data/icons/transport-3-11/32/Excavator-2-512.png"
+}
+###
+
+# PRODUCT Partial Update
+PATCH  http://localhost:8080/products/api/1/price
+content-type: application/json
+
+{
+    "price": 999
+}
+
+###
+
+# PRODUCT Delete
+DELETE  http://localhost:8080/products/api/3
+###
+
+# PRODUCT List Products
+GET http://localhost:8080/products/api

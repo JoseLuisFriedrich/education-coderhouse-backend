@@ -1,0 +1,2 @@
+  // socket.broadcast.emit -> emits all connected sockets except the one it is being called on.
+  // io.sockets.emit -> emits all connected sockets.

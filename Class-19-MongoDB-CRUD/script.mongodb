@@ -33,7 +33,7 @@ db.products.find()
 db.messages.count()
 db.products.count()
 
-// CRUD products
+// Crud products
 
 // C
 db.products.insertOne({ 'title': 'Producto 8', 'price': 4320, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fried-chicken-thigh-fast-food-512.png' })
@@ -43,10 +43,8 @@ db.products.find()
 db.products.find({ 'title': 'Producto 8' })
 db.products.find({ 'price': {$lt: 1000} })
 db.products.find({ 'price': {$gt: 3000} })
-db.products.find({}).sort({'price': 1}).skip(2).limit(1)
-
-// no me funciona esta consulta, 'unknown operator $and', qué puede ser?
 db.products.find({ 'price': {$and: [{$gt: 1000}, {$lt: 3000}]} })
+db.products.find({}).sort({'price': 1}).skip(2).limit(1)
 
 // U
 db.products.updateMany({}, {$set : {'stock': 100}})
