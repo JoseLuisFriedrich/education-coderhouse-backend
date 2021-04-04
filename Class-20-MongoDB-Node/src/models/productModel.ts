@@ -1,4 +1,17 @@
-import { IProduct, Product } from '../interfaces/productInterface'
+import { model, Model, Schema } from 'mongoose'
+
+import { IProduct } from '../interfaces/productInterface'
+
+// schema
+const ProductSchema: Schema = new Schema({
+  id: { type: Number, required: true },
+  title: { type: String, required: true },
+  price: { type: Number, required: true },
+  thumbnail: { type: String, required: true },
+})
+
+// class
+const Product: Model<IProduct> = model('Product', ProductSchema)
 
 export const productGet = async (): Promise<Array<IProduct>> => {
   return await Product.find({}).sort({ title: 1 })
