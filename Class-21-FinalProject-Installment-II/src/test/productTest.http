@@ -32,6 +32,10 @@ GET http://localhost:8080/products/api/1
 GET http://localhost:8080/products/api/Incredible%20Frozen%20Bacon/title
 ###
 
+# PRODUCT ProductByPriceRange
+GET http://localhost:8080/products/api/0/1000/price
+###
+
 # PRODUCT Update
 PUT http://localhost:8080/products/api
 content-type: application/json
