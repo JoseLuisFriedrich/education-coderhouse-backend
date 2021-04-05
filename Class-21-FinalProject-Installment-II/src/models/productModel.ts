@@ -1,4 +1,5 @@
 import { model, Model, Schema } from 'mongoose'
+import { title } from 'process'
 
 import { IProduct } from '../interfaces/productInterface'
 
@@ -21,6 +22,16 @@ export const productGetById = async id => {
   return await Product.findOne({ id: id })
 }
 
+export const productGetByTitle = async title => {
+  return await Product.findOne({ title: title })
+}
+
+export const productGetByPriceRange = async (from, to): Promise<Array<IProduct>> => {
+  return await Product.find({
+    price: { $gte: from, $lte: to },
+  }).sort({ title: 1 })
+}
+
 export const productInsert = async (product: IProduct) => {
   try {
     await new Product(product).save()
@@ -34,6 +45,18 @@ export const productUpdate = async (product: IProduct) => {
 
   try {
     result = (await Product.updateOne({ id: product.id }, product)).nModified
+  } catch (ex) {
+    console.error(ex)
+  }
+
+  return result === 1
+}
+
+export const productUpdateTitle = async (id, title) => {
+  let result: number | undefined = 0
+
+  try {
+    result = (await Product.updateOne({ id: id }, { title: title })).nModified
   } catch (ex) {
     console.error(ex)
   }

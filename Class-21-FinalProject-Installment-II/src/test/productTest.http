@@ -28,6 +28,10 @@ GET http://localhost:8080/products/api
 GET http://localhost:8080/products/api/1
 ###
 
+# PRODUCT ProductByTitle
+GET http://localhost:8080/products/api/Incredible%20Frozen%20Bacon/title
+###
+
 # PRODUCT Update
 PUT http://localhost:8080/products/api
 content-type: application/json
@@ -40,7 +44,17 @@ content-type: application/json
 }
 ###
 
-# PRODUCT Partial Update
+# PRODUCT Partial Update Title
+PATCH  http://localhost:8080/products/api/1/title
+content-type: application/json
+
+{
+    "title": "Updated Title"
+}
+
+###
+
+# PRODUCT Partial Update Price
 PATCH  http://localhost:8080/products/api/1/price
 content-type: application/json
 

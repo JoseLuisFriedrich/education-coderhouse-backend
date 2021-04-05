@@ -156,11 +156,21 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Título</th>
-          <th scope="col">Precio</th>
+          <th scope="col">
+            <select id='product-filter-title'>
+              <option selected>Todos</option>
+            </select>
+          </th>
+          <th scope="col">
+            <select id='product-filter-price'>
+              <option selected>Todos</option>
+              <option selected>< 1000</option>
+              <option selected>>= 1000</option>
+            </select>
+          </th>
           <th scope="col">Imagen</th>
           <th scope="col">Eliminar<br>Producto</th>
-          <th scope="col">Agregar<br>Carrito<br>(n° veces)</th>
+          <th scope="col">Agregar<br>Carrito<br>n-veces</th>
         </tr>
       </thead>
       <tbody id='product-row' />
@@ -170,8 +180,8 @@
   <script id="template-product-row" type="text/x-handlebars-template">
     <tr>
       <td>{{this.id}}</td>
-      <td>{{this.title}}</td>
-      <td>$ {{this.price}}</td>
+      <td><input class='product-update-title' type='text' value='{{this.title}}' required></td>
+      <td><input class='product-update-price' type='text' value='{{this.price}}' required></td>
       <td><img src="{{this.thumbnail}}"></td>
       <td><i id="product-delete" name="product-delete" class="fas fa-trash-alt icon"></i></td>
       <td><i id="product-cart" name="product-cart"  class="fas fa-cart-plus icon"></i></td>

@@ -7,13 +7,17 @@ $(document).on('click', '#user-isAdmin', () => userUpdateIsAdmin())
 $(document).on('click', '#product-cart', e => productAddToCart(e))
 $(document).on('click', '#product-delete', e => productDelete(e))
 $(document).on('click', '#cart-delete', e => cartDelete(e))
+$(document).on('change', '#product-filter-title', e => productGetByTitle(e))
+$(document).on('change', '#product-filter-price', e => productGetByPriceRange(e))
+$(document).on('input', '.product-update-title', e => productPatch(e))
+$(document).on('input', '.product-update-price', e => productPatch(e))
 
 $(document).on('submit', '#chatForm', e => chatSendMessage(e))
 $(document).on('submit', '#productForm', e => productAdd(e))
 
 // io
 socket.on('chat', messages => onChatMessages(messages))
-socket.on('products', products => onProducts(products))
+socket.on('products', products => onProducts(products, true))
 
 // user
 const userGet = () => {
@@ -84,7 +88,7 @@ const onChatMessages = (messages) => {
 
 // products
 let isFirstTimeProduct = true
-const onProducts = (products) => {
+const onProducts = (products, addToFilter) => {
   //if (messages.length === 0) return
 
   // table template
@@ -101,6 +105,11 @@ const onProducts = (products) => {
     const dom = template(product)
 
     $('#product-row').append(dom)
+
+    if (addToFilter) {
+      // filter
+      $('#product-filter-title').append(new Option(product.title, product.id))
+    }
   })
 }
 
@@ -132,6 +141,68 @@ const productAddToCart = (e) => {
     success: (payload) => {
       cartRefresh(payload)
     },
+    error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+  })
+}
+
+const productGetByTitle = (e) => {
+  const index = e.target.selectedIndex
+  const title = e.target[index].text
+  const url = index === 0 ? `/products/api` : `/products/api/${title}/title`
+
+  $.ajax({
+    url: url,
+    type: 'get',
+    dataType: 'json',
+    contentType: 'application/json',
+    // data: { title: title },
+    success: (payload) => {
+      $('#product-row').empty()
+
+      onProducts(index === 0 ? payload : [payload], false)
+    },
+    error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+  })
+}
+
+const productGetByPriceRange = (e) => {
+  const index = e.target.selectedIndex
+
+  const from = index === 1 ? 0 : 1000
+  const to = index === 1 ? 1000 : 999999
+  const url = index === 0 ? `/products/api` : `/products/api/${from}/${to}/price`
+
+  $.ajax({
+    url: url,
+    type: 'get',
+    dataType: 'json',
+    contentType: 'application/json',
+    success: (payload) => {
+      $('#product-row').empty()
+
+      onProducts(payload, false)
+    },
+    error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+  })
+}
+
+const productPatch = (e) => {
+  if (e.target.value.length === 0) return
+
+  const target = e.target.classList[0]
+  const id = Number($(e.target).closest('tr').find('td').html())
+  const field = target === 'product-update-title' ? 'title' : 'price'
+
+  $.ajax({
+    url: `/products/api/${id}/${field}`,
+    type: 'patch',
+    success: () => {
+      //filter
+      if (field === 'title') {
+        $(`#product-filter-title option[value="${id}"]`).text(e.target.value)
+      }
+    },
+    data: { [field]: e.target.value },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
 }

@@ -31,6 +31,29 @@ export const productGetById = async (req: Request, res: Response) => {
   }
 }
 
+export const productGetByTitle = async (req: Request, res: Response) => {
+  const title = req.params.title
+
+  const product: IProduct | null = await db.productGetByTitle(title)
+  if (product) {
+    res.status(200).send(product)
+  } else {
+    res.status(404).send({ error: 'product not found' })
+  }
+}
+
+export const productGetByPriceRange = async (req: Request, res: Response) => {
+  const from = req.params.from
+  const to = req.params.to
+
+  const products = await db.productGetByPriceRange(from, to)
+  if (products.length > 0) {
+    res.status(200).send(products)
+  } else {
+    res.status(404).send({ error: 'product not found' })
+  }
+}
+
 export const productInsert = async (io: any, req: Request, res: Response) => {
   const id = (await db.productGet()).length + 1 //do better
   const product: IProduct = { id, ...req.body, price: Number(req.body.price) }
@@ -54,7 +77,18 @@ export const productUpdate = async (req: Request, res: Response) => {
   }
 }
 
-//todo
+export const productUpdateTitle = (req: Request, res: Response) => {
+  const id = req.params.id
+  const { title } = req.body
+
+  const updated = db.productUpdateTitle(id, title)
+  if (updated) {
+    res.status(200).send('updated')
+  } else {
+    res.status(404).send({ error: 'product not updated' })
+  }
+}
+
 export const productUpdatePrice = (req: Request, res: Response) => {
   const id = req.params.id
   const { price } = req.body
