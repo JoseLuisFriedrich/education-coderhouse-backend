@@ -1,0 +1,15 @@
+# CART Get
+GET http://localhost:8080/cart/api
+###
+
+# CART Post
+POST http://localhost:8080/cart/api/1
+###
+
+# CART Post
+POST http://localhost:8080/cart/api/2
+###
+
+# CART Delete
+DELETE  http://localhost:8080/cart/api/1
+###
