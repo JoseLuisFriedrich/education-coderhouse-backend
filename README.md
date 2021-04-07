@@ -17,9 +17,8 @@ La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets
 
 ```
 git clone https://github.com/JoseLuisFriedrich/coderhouse-backend
-cd coderhouse-backend\Class-17-MySQL-SQLite3-II
+cd coderhouse-backend\Class-22-Mocks
 npm i
-npm run db (if necessary)
 npm run dev
 ```
 

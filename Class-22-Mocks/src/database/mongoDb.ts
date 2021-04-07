@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 export const connect = (): any => {
-  const connString = process.env.DB_CONNECTION || 'mongodb://127.0.0.1/jlf_coderhouse_ecommerce?poolSize=10'
+  const connString = process.env.DB_CONNECTION || 'mongodb+srv://root:root@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
   mongoose.connect(connString, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
     console.error(err)
   })
