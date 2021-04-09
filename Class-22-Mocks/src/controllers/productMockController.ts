@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
-// import { IProduct } from '../interfaces/productInterface'
+import * as db from '../models/productModel'
+import { IProduct } from '../interfaces/productInterface'
 
 import faker from 'faker/locale/es'
 
@@ -21,13 +22,18 @@ export const productMockGet = async (req: Request, res: Response) => {
   ]
 
   const limit = req.query.limit || 10
+
+  await db.productDeleteAll()
+
   for (let i = 0; i < limit; i++) {
-    const product = {
+    const product = new db.Product({
       id: i + 1,
       title: faker.commerce.productName(),
       price: Math.floor(Math.random() * 100),
       thumbnail: images[Math.floor(Math.random() * images.length)],
-    }
+    })
+
+    await db.productInsert(product)
     products.push(product)
   }
 

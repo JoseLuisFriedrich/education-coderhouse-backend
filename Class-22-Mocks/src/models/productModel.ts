@@ -12,7 +12,7 @@ const ProductSchema: Schema = new Schema({
 })
 
 // class
-const Product: Model<IProduct> = model('Product', ProductSchema)
+export const Product: Model<IProduct> = model('Product', ProductSchema)
 
 export const productGet = async (): Promise<Array<IProduct>> => {
   return await Product.find({}).sort({ title: 1 })
@@ -81,6 +81,18 @@ export const productDelete = async id => {
 
   try {
     result = (await Product.deleteOne({ id: id })).deletedCount
+  } catch (ex) {
+    console.error(ex)
+  }
+
+  return result === 1
+}
+
+export const productDeleteAll = async () => {
+  let result: number | undefined = 0
+
+  try {
+    result = (await Product.deleteMany({})).deletedCount
   } catch (ex) {
     console.error(ex)
   }
