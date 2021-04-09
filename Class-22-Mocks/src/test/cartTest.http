@@ -1,15 +1,15 @@
 # CART Get
-GET http://localhost:8080/cart/api
+GET http://localhost:8080/api/cart
 ###
 
 # CART Post
-POST http://localhost:8080/cart/api/1
+POST http://localhost:8080/api/cart/1
 ###
 
 # CART Post
-POST http://localhost:8080/cart/api/2
+POST http://localhost:8080/api/cart/2
 ###
 
 # CART Delete
-DELETE  http://localhost:8080/cart/api/1
+DELETE  http://localhost:8080/api/cart/1
 ###

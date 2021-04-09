@@ -9,10 +9,10 @@ const router = (app: any, io: any) => {
   chatIo(io)
 
   // routes
-  app.use('/cart/api', cartApi())
-  app.use('/products/api', productsApi(io))
-  app.use('/productMock/api', productMockApi(io))
-  app.use('/user/api', userApi())
+  app.use('/api/cart', cartApi())
+  app.use('/api/products', productsApi(io))
+  app.use('/api/productMock', productMockApi(io))
+  app.use('/api/user', userApi())
 
   return this
 }

@@ -23,7 +23,7 @@ socket.on('products', products => onProducts(products))
 // user
 const userGet = () => {
   $.ajax({
-    url: '/user/api',
+    url: '/api/user',
     type: 'get',
     success: (user) => {
       get('#user-user').value = user.id
@@ -32,7 +32,7 @@ const userGet = () => {
 
       // cart get
       $.ajax({
-        url: `/cart/api`,
+        url: `/api/cart`,
         type: 'get',
         success: (cart) => cartRefresh(cart)
       })
@@ -46,7 +46,7 @@ const userUpdateIsAdmin = () => {
   const isAdmin = get('#user-isAdmin').checked
 
   $.ajax({
-    url: `/user/api/${user}/isAdmin`,
+    url: `/api/user/${user}/isAdmin`,
     type: 'patch',
     dataType: 'json',
     contentType: 'application/json',
@@ -118,7 +118,7 @@ const productMockData = (e) => {
   e.preventDefault()
 
   $.ajax({
-    url: '/productMock/api',
+    url: '/api/productMock',
     type: 'get',
     data: { limit: 3 },
     success: (payload) => {
@@ -142,7 +142,7 @@ const productAdd = (e) => {
   e.preventDefault()
 
   $.ajax({
-    url: '/products/api',
+    url: '/api/products',
     type: 'post',
     data: $(e.currentTarget).serialize(),
     success: (payload) => {
@@ -161,7 +161,7 @@ const productAddToCart = (e) => {
   const id = Number($(e.target).closest('tr').find('td').html())
 
   $.ajax({
-    url: `/cart/api/${id}`,
+    url: `/api/cart/${id}`,
     type: 'post',
     success: (payload) => {
       cartRefresh(payload)
@@ -173,7 +173,7 @@ const productAddToCart = (e) => {
 // const productGetByTitle = (e) => {
 //   const index = e.target.selectedIndex
 //   const title = e.target[index].text
-//   const url = index === 0 ? `/products/api` : `/products/api/${title}/title`
+//   const url = index === 0 ? `/api/products` : `/api/products/${title}/title`
 
 //   $.ajax({
 //     url: url,
@@ -193,7 +193,7 @@ const productAddToCart = (e) => {
 
 const productGetByTitle = (e) => {
   const title = e.target.value
-  const url = (title === '') ? `/products/api` : `/products/api/${title}/title`
+  const url = (title === '') ? `/api/products` : `/api/products/${title}/title`
 
   $.ajax({
     url: url,
@@ -216,7 +216,7 @@ const productGetByPriceRange = (e) => {
 
   const from = index === 1 ? 0 : 50
   const to = index === 1 ? 50 : 999999
-  const url = index === 0 ? `/products/api` : `/products/api/${from}/${to}/price`
+  const url = index === 0 ? `/api/products` : `/api/products/${from}/${to}/price`
 
   $.ajax({
     url: url,
@@ -240,7 +240,7 @@ const productPatch = (e) => {
   const field = target === 'product-update-title' ? 'title' : 'price'
 
   $.ajax({
-    url: `/products/api/${id}/${field}`,
+    url: `/api/products/${id}/${field}`,
     type: 'patch',
     success: () => {
       //filter
@@ -257,7 +257,7 @@ const productDelete = (e) => {
   const id = Number($(e.target).closest('tr').find('td').html())
 
   $.ajax({
-    url: `/products/api/${id}`,
+    url: `/api/products/${id}`,
     type: 'delete',
     success: (payload) => {
       $(e.target).closest('tr').remove()
@@ -293,7 +293,7 @@ const cartDelete = (e) => {
   const id = Number($(e.target).closest('tr').find('td').html())
 
   $.ajax({
-    url: `/cart/api/${id}`,
+    url: `/api/cart/${id}`,
     type: 'delete',
     success: () => {
       $(e.target).closest('tr').remove()

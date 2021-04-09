@@ -2,15 +2,15 @@
   # router.delete('/:id', productController.productDelete)
 
 # PRODUCT ProductGet (There're not products available)
-GET http://localhost:8080/products/api
+GET http://localhost:8080/api/products
 ###
 
 # PRODUCT ProductById (Not Found)
-GET http://localhost:8080/products/api/0
+GET http://localhost:8080/api/products/0
 ###
 
 # PRODUCT Add new Product
-POST http://localhost:8080/products/api
+POST http://localhost:8080/api/products
 content-type: application/json
 
 {
@@ -21,23 +21,23 @@ content-type: application/json
 ###
 
 # PRODUCT List Products
-GET http://localhost:8080/products/api
+GET http://localhost:8080/api/products
 ###
 
 # PRODUCT ProductGetById
-GET http://localhost:8080/products/api/1
+GET http://localhost:8080/api/products/1
 ###
 
 # PRODUCT ProductByTitle
-GET http://localhost:8080/products/api/Incredible%20Frozen%20Bacon/title
+GET http://localhost:8080/api/products/Incredible%20Frozen%20Bacon/title
 ###
 
 # PRODUCT ProductByPriceRange
-GET http://localhost:8080/products/api/0/1000/price
+GET http://localhost:8080/api/products/0/1000/price
 ###
 
 # PRODUCT Update
-PUT http://localhost:8080/products/api
+PUT http://localhost:8080/api/products
 content-type: application/json
 
 {
@@ -49,7 +49,7 @@ content-type: application/json
 ###
 
 # PRODUCT Partial Update Title
-PATCH  http://localhost:8080/products/api/1/title
+PATCH  http://localhost:8080/api/products/1/title
 content-type: application/json
 
 {
@@ -59,7 +59,7 @@ content-type: application/json
 ###
 
 # PRODUCT Partial Update Price
-PATCH  http://localhost:8080/products/api/1/price
+PATCH  http://localhost:8080/api/products/1/price
 content-type: application/json
 
 {
@@ -69,8 +69,8 @@ content-type: application/json
 ###
 
 # PRODUCT Delete
-DELETE  http://localhost:8080/products/api/3
+DELETE  http://localhost:8080/api/products/3
 ###
 
 # PRODUCT List Products
-GET http://localhost:8080/products/api
+GET http://localhost:8080/api/products
