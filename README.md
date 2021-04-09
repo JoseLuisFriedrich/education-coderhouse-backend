@@ -8,10 +8,10 @@ La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets
 
 # .env
 
-| Configuración       | Descripción
-|---------------------|------------------------------
-| DB_CONNECTION       | Connection string MongoDB
-| APP_PORT            | Puerto Node.js
+| Configuración       | Descripción                  | Ejemplo
+|---------------------|------------------------------|-----------------------------------------
+| DB_CONNECTION       | Connection string MongoDB    | mongodb://127.0.0.1/coderhouse_ecommerce
+| APP_PORT            | Puerto Node.js               | 8080
 
 # Setup (Windows)
 
