@@ -17,7 +17,7 @@ La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets
 
 ```
 git clone https://github.com/JoseLuisFriedrich/coderhouse-backend
-cd coderhouse-backend\Class-22-Mocks
+cd coderhouse-backend\Class-23-JsonNormalize
 npm i
 npm run dev
 ```
