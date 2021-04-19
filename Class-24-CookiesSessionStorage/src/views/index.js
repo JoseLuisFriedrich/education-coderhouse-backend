@@ -3,6 +3,8 @@ const socket = io()
 
 // events
 $(document).ready(() => init())
+
+$(document).on('submit', '#user-form', e => userGet(e))
 $(document).on('click', '#user-isAdmin', () => userUpdateIsAdmin())
 
 $(document).on('submit', '#chat-form', e => chatSendMessage(e))
@@ -18,48 +20,111 @@ $(document).on('submit', '#product-mock-form', e => productMockData(e))
 $(document).on('submit', '#product-form', e => productAdd(e))
 
 $(document).on('click', '#cart-delete', e => cartDelete(e))
+$(document).on('click', '#storage-clear', e => storageClear(e))
 
 // io
 socket.on('chat', messages => onChatMessages(messages))
 socket.on('products', products => onProducts(products))
 
 // init
+const isUserValid = () => {
+  let user = localStorage.getItem('user')
+  let secondsDiff = -1
+
+  if (user !== null) {
+    user = JSON.parse(user)
+    secondsDiff = Number(user.expiration - Math.abs((new Date(new Date().toISOString()) - new Date(user.loginDate).getTime()) / 1000))
+    user.secondsDiff = parseInt(secondsDiff)
+    currentUser = user
+  }
+
+  const isValid = user !== null && secondsDiff > 0
+  return isValid
+}
+
 const init = () => {
-  userGet()
+  const template = Handlebars.compile($(isUserValid() ? '#user-welcome' : '#user-login').html())
+  if (isUserValid()) {
+    const domTemplate = template({ userName: currentUser.username, secondsDiff: currentUser.secondsDiff })
+    $('#user-form').html(domTemplate)
+    get('#user-isAdmin').checked = currentUser.isAdmin
+  } else {
+    const domTemplate = template({})
+    $('#user-form').html(domTemplate)
+    $('#user-name').focus()
+  }
+
+  cartGet()
 }
 
 // user
-const userGet = () => {
-  $.ajax({
-    url: '/api/user',
-    type: 'get',
-    success: (user) => {
-      get('#user-user').value = user.id
-      get('#user-isAdmin').checked = user.isAdmin
-      get('#chat-user').value = user.username
-      currentUser = user
+const userGet = (e) => {
+  e.preventDefault()
 
-      // cart get
-      $.ajax({
-        url: `/api/cart`,
-        type: 'get',
-        success: (cart) => cartRefresh(cart)
-      })
-    },
-    error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
-  })
+  const userType = get('#user-type').value
+  if (userType === 'login') {
+    const userName = get('#user-name').value
+    const userExpiration = parseInt(get('#user-expiration').value)
+
+    $.ajax({
+      url: `/api/user/${userName}/${userExpiration}`,
+      type: 'get',
+      success: (user) => {
+        get('#user-isAdmin').checked = user.isAdmin
+        // get('#chat-user').value = user.username
+        currentUser = user
+        localStorage.setItem('user', JSON.stringify(user))
+
+        const template = Handlebars.compile($('#user-welcome').html())
+        const domTemplate = template({ userName: user.username, secondsDiff: userExpiration })
+
+        //const userTemplate = $('#user-welcome').html()
+        $('#user-form').html(domTemplate)
+        //$('#user-name').html(user.username)
+
+        cartGet()
+      },
+      error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+    })
+  } else {
+    $.ajax({
+      url: `/api/user/logout`,
+      type: 'get',
+      success: () => {
+        localStorage.clear()
+        const userTemplate = $('#user-login').html()
+
+        $('#user-form').html(userTemplate)
+        $('#user-name').focus()
+        $('#cart').html('')
+      },
+      error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+    })
+  }
 }
 
 const userUpdateIsAdmin = () => {
-  const user = get('#user-user').value
+  if (!isUserValid()) {
+    get('#user-isAdmin').checked = !get('#user-isAdmin').checked
+    alert('Inicie sesión')
+    return
+  }
+
+  const userId = currentUser.id //get('#user-user').value
   const isAdmin = get('#user-isAdmin').checked
 
   $.ajax({
-    url: `/api/user/${user}/isAdmin`,
+    url: `/api/user/${userId}/isAdmin`,
     type: 'patch',
     dataType: 'json',
     contentType: 'application/json',
     data: JSON.stringify({ isAdmin }),
+    success: () => {
+      if (isUserValid()) {
+        currentUser.isAdmin = isAdmin
+        localStorage.setItem('user', JSON.stringify(currentUser))
+      }
+    },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
 }
@@ -67,6 +132,11 @@ const userUpdateIsAdmin = () => {
 // chat
 const chatSendMessage = (e) => {
   e.preventDefault()
+
+  if (!isUserValid()) {
+    alert('Inicie sesión')
+    return
+  }
 
   const text = get('#chat-text')
 
@@ -143,6 +213,11 @@ const onProducts = (products) => {
 const productMockData = (e) => {
   e.preventDefault()
 
+  if (!isUserValid()) {
+    alert('Inicie sesión')
+    return
+  }
+
   $.ajax({
     url: '/api/productMock',
     type: 'get',
@@ -171,7 +246,7 @@ const productAdd = (e) => {
     url: '/api/products',
     type: 'post',
     data: $(e.currentTarget).serialize(),
-    success: (payload) => {
+    success: () => {
       get('#price').value = ''
       get('#thumbnail').selectedIndex = 0
 
@@ -184,6 +259,11 @@ const productAdd = (e) => {
 }
 
 const productAddToCart = (e) => {
+  if (!isUserValid()) {
+    alert('Inicie sesión')
+    return
+  }
+
   const id = Number($(e.target).closest('tr').find('td').html())
 
   $.ajax({
@@ -280,6 +360,11 @@ const productPatch = (e) => {
 }
 
 const productDelete = (e) => {
+  if (!isUserValid()) {
+    alert('Inicie sesión')
+    return
+  }
+
   const id = Number($(e.target).closest('tr').find('td').html())
 
   $.ajax({
@@ -293,13 +378,20 @@ const productDelete = (e) => {
 }
 
 // cart
+const cartGet = () => {
+  $.ajax({
+    url: `/api/cart`,
+    type: 'get',
+    success: (cart) => cartRefresh(cart)
+  })
+}
 const cartRefresh = (payload) => {
   if (!payload.products.length) return
 
   get('#cart-id').value = payload.id
 
   const template = $('#template-cart-table').html()
-  $('#cart').replaceWith(template)
+  $('#cart').html(template)
   $('#cart-row').html('')
 
   payload.products.forEach(product => {
@@ -326,4 +418,9 @@ const cartDelete = (e) => {
     },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
+}
+
+
+const storageClear = () => {
+  localStorage.clear()
 }
