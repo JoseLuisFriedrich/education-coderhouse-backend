@@ -5,7 +5,7 @@ import { IUser } from '../interfaces/userInterface'
 
 // helpers
 const getUser = (req: Request): IUser => {
-  let user: IUser = req.session?.user
+  let user = req.session?.user //: IUser
   // let secondsDiff: any = user
   //   ? Number(Number(req.params.expiration) - Math.abs((new Date(new Date().toISOString()).getTime() - new Date(user.loginDate).getTime()) / 1000))
   //   : -1
