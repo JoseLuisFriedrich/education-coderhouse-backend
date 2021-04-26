@@ -1,0 +1,13 @@
+# USER Get
+GET http://localhost:8080/api/user
+###
+
+# USER Patch isAdmin
+PATCH  http://localhost:8080/api/user/d08ad47f-59ae-4153-a7c0-4a8f7c178bd2/isAdmin
+content-type: application/json
+
+{
+    "isAdmin": true
+}
+
+###
