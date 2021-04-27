@@ -3,6 +3,7 @@ import session from 'express-session'
 import dbStore from 'connect-mongo'
 import dotenv from 'dotenv'
 import passport from 'passport'
+import cookieParser from 'cookie-parser'
 import LocalStrategy from 'passport-local'
 
 import * as db from './database/mongoDb'
@@ -20,6 +21,7 @@ dotenv.config()
 const app: Application = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, './Views')))
 app.use(
   session({
