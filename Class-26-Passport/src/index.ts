@@ -62,6 +62,14 @@ passport.use(
   )
 )
 
+passport.serializeUser((user, done) => {
+  // done(null, user._id)
+})
+
+passport.deserializeUser((id, done) => {
+  //dbUser.userGetByUsername(userName)
+})
+
 // main
 const http = new httpLib.Server(app)
 const io = new socketio.Server(http)
