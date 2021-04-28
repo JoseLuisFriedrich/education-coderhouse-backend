@@ -23,7 +23,7 @@ export const onConnection = async (io: any, socket: any) => {
   // messageSend
   socket.on('chat', async (message: IMessage) => {
     message.date = new Date().toLocaleTimeString()
-    message.user.username = message.user.username.replace('[AUTOGENERADO] ', '')
+    message.user.userName = message.user.userName.replace('[AUTOGENERADO] ', '')
 
     // persist
     const persistedMessage = await db.messageInsert(message)

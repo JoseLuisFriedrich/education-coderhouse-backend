@@ -4,10 +4,12 @@ import dbStore from 'connect-mongo'
 import dotenv from 'dotenv'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
-import LocalStrategy from 'passport-local'
+import { Strategy as LocalStrategy } from 'passport-local'
 
 import * as db from './database/mongoDb'
 import * as dbUser from './models/userModel'
+import * as userController from './controllers/userController'
+import { IUser } from './interfaces/userInterface'
 import * as socketio from 'socket.io'
 import * as httpLib from 'http'
 import * as path from 'path'
@@ -21,34 +23,45 @@ dotenv.config()
 const app: Application = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
 app.use(express.static(path.join(__dirname, './Views')))
+app.use(cookieParser())
 app.use(
   session({
-    store: dbStore.create({ mongoUrl: db.connString() }),
+    store: dbStore.create({ mongoUrl: db.connString(), ttl: 600 }),
     secret: 'JLF',
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: false,
+      secure: false,
+      maxAge: 6000 * 1000,
+    },
   })
 )
 
 // auth
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.post('/login', passport.authenticate('login', { failureRedirect: '/' }))
+app.post('/signup', passport.authenticate('signup', { failureRedirect: '/' }))
+
 passport.use(
   'login',
-  new LocalStrategy.Strategy(
+  new LocalStrategy(
     {
       passReqToCallback: true,
     },
-    (req, username, password, done) => {
-      console.log(username)
-      //dbUser.userGetByUsername(userName)
+    async (req, userName, password, done) => {
+      console.log('jeje')
+      const user = await dbUser.userGetByUserName(userName)
 
       try {
-        if (true) {
+        if (user) {
           //exists
-          if (true) {
+          if (userController.isValidPassword(password, user.password)) {
             //right pass
-            return done(null, username)
+            return done(null, user)
           } else {
             //wrong pass
             return done(null, false)
@@ -64,12 +77,46 @@ passport.use(
   )
 )
 
-passport.serializeUser((user, done) => {
-  // done(null, user._id)
+passport.use(
+  'signup',
+  new LocalStrategy(
+    {
+      passReqToCallback: true,
+    },
+    async (req, userName, password, done) => {
+      console.log('jeje')
+      const user = await dbUser.userGetByUserName(userName)
+
+      try {
+        if (user) {
+          //exists
+          return done(null, false)
+        } else {
+          const user: IUser = { ...req.body }
+          user.isAdmin = false
+          user.loginDate = new Date().toISOString()
+          user.expiration = Number(user.expiration)
+          user.password = userController.createHash(password)
+          userController.setUser(req, user)
+          await dbUser.userInsert(user)
+        }
+      } catch (ex) {
+        return done(ex)
+      }
+    }
+  )
+)
+
+passport.serializeUser((user: any, done) => {
+  console.log('1')
+  done(null, user.userName)
 })
 
-passport.deserializeUser((id, done) => {
-  //dbUser.userGetByUsername(userName)
+passport.deserializeUser(async (userName, done) => {
+  console.log('2')
+
+  const user = await dbUser.userGetByUserName(userName)
+  done(null, user)
 })
 
 // main

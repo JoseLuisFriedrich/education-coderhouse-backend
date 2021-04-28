@@ -45,7 +45,7 @@ const isUserValid = () => {
 const init = () => {
   const template = Handlebars.compile($(isUserValid() ? '#user-welcome' : '#user-login').html())
   if (isUserValid()) {
-    const domTemplate = template({ userName: currentUser.username, secondsDiff: currentUser.secondsDiff })
+    const domTemplate = template({ userName: currentUser.userName, secondsDiff: currentUser.secondsDiff })
     $('#user-form').html(domTemplate)
     get('#user-isAdmin').checked = currentUser.isAdmin
   } else {
@@ -64,23 +64,30 @@ const userGet = (e) => {
   const userType = get('#user-type').value
   if (userType === 'login') {
     const userName = get('#user-name').value
-    const userExpiration = parseInt(get('#user-expiration').value)
+    const password = get('#user-password').value
+    const expiration = parseInt(get('#user-expiration').value)
+    const isLogin = e.originalEvent.submitter.defaultValue === 'Iniciar Sesión'
 
     $.ajax({
-      url: `/api/user/${userName}/${userExpiration}`,
-      type: 'get',
+      url: `/api/user/${isLogin ? 'login' : 'signup'}`,
+      type: 'post',
+      data: {
+        userName,
+        password,
+        expiration
+      },
       success: (user) => {
         get('#user-isAdmin').checked = user.isAdmin
-        // get('#chat-user').value = user.username
+        // get('#chat-user').value = user.userName
         currentUser = user
         localStorage.setItem('user', JSON.stringify(user))
 
         const template = Handlebars.compile($('#user-welcome').html())
-        const domTemplate = template({ userName: user.username, secondsDiff: userExpiration })
+        const domTemplate = template({ userName: user.userName, secondsDiff: expiration })
 
         //const userTemplate = $('#user-welcome').html()
         $('#user-form').html(domTemplate)
-        //$('#user-name').html(user.username)
+        //$('#user-name').html(user.userName)
 
         cartGet()
       },

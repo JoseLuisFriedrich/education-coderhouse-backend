@@ -9,5 +9,15 @@ content-type: application/json
 {
     "isAdmin": true
 }
+###
 
+# PRODUCT Add new Product
+POST http://localhost:8080/api/user/loginpassport
+content-type: application/json
+
+{
+    "userName": "bbbbs",
+    "password": "aaa",
+    "expiration": 600
+}
 ###
