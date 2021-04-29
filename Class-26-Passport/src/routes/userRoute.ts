@@ -1,14 +1,17 @@
 import express, { Router } from 'express'
 import * as userController from '../controllers/userController'
-import passport from 'passport'
+import { passportRouter } from '../auth/passportAuth'
 
 const userRouter = () => {
   const router: Router = express.Router()
 
-  router.post('/login', userController.userGet)
-  router.post('/signup', userController.userCreate)
+  passportRouter(router)
+
+  //router.post('/login', userController.userGet)
+  // router.post('/signup', userController.userCreate)
+  // router.get('/logout', userController.userLogout)
+
   router.patch('/:id/isAdmin', userController.userUpdateIsAdmin)
-  router.get('/logout', userController.userLogout)
 
   return router
 }

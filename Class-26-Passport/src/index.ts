@@ -2,14 +2,10 @@ import express, { Application } from 'express'
 import session from 'express-session'
 import dbStore from 'connect-mongo'
 import dotenv from 'dotenv'
-import passport from 'passport'
 import cookieParser from 'cookie-parser'
-import { Strategy as LocalStrategy } from 'passport-local'
+import passportAuth from './auth/passportAuth'
 
 import * as db from './database/mongoDb'
-import * as dbUser from './models/userModel'
-import * as userController from './controllers/userController'
-import { IUser } from './interfaces/userInterface'
 import * as socketio from 'socket.io'
 import * as httpLib from 'http'
 import * as path from 'path'
@@ -31,6 +27,7 @@ app.use(
     secret: 'JLF',
     resave: false,
     saveUninitialized: false,
+    rolling: true,
     cookie: {
       httpOnly: false,
       secure: false,
@@ -40,84 +37,7 @@ app.use(
 )
 
 // auth
-app.use(passport.initialize())
-app.use(passport.session())
-
-app.post('/login', passport.authenticate('login', { failureRedirect: '/' }))
-app.post('/signup', passport.authenticate('signup', { failureRedirect: '/' }))
-
-passport.use(
-  'login',
-  new LocalStrategy(
-    {
-      passReqToCallback: true,
-    },
-    async (req, userName, password, done) => {
-      console.log('jeje')
-      const user = await dbUser.userGetByUserName(userName)
-
-      try {
-        if (user) {
-          //exists
-          if (userController.isValidPassword(password, user.password)) {
-            //right pass
-            return done(null, user)
-          } else {
-            //wrong pass
-            return done(null, false)
-          }
-        } else {
-          //don't exists
-          return done(null, false)
-        }
-      } catch (ex) {
-        return done(ex)
-      }
-    }
-  )
-)
-
-passport.use(
-  'signup',
-  new LocalStrategy(
-    {
-      passReqToCallback: true,
-    },
-    async (req, userName, password, done) => {
-      console.log('jeje')
-      const user = await dbUser.userGetByUserName(userName)
-
-      try {
-        if (user) {
-          //exists
-          return done(null, false)
-        } else {
-          const user: IUser = { ...req.body }
-          user.isAdmin = false
-          user.loginDate = new Date().toISOString()
-          user.expiration = Number(user.expiration)
-          user.password = userController.createHash(password)
-          userController.setUser(req, user)
-          await dbUser.userInsert(user)
-        }
-      } catch (ex) {
-        return done(ex)
-      }
-    }
-  )
-)
-
-passport.serializeUser((user: any, done) => {
-  console.log('1')
-  done(null, user.userName)
-})
-
-passport.deserializeUser(async (userName, done) => {
-  console.log('2')
-
-  const user = await dbUser.userGetByUserName(userName)
-  done(null, user)
-})
+passportAuth(app)
 
 // main
 const http = new httpLib.Server(app)

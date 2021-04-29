@@ -51,7 +51,7 @@ const init = () => {
   } else {
     const domTemplate = template({})
     $('#user-form').html(domTemplate)
-    $('#user-name').focus()
+    $('#username').focus()
   }
 
   cartGet()
@@ -63,32 +63,23 @@ const userGet = (e) => {
 
   const userType = get('#user-type').value
   if (userType === 'login') {
-    const userName = get('#user-name').value
-    const password = get('#user-password').value
     const expiration = parseInt(get('#user-expiration').value)
     const isLogin = e.originalEvent.submitter.defaultValue === 'Iniciar Sesión'
 
     $.ajax({
       url: `/api/user/${isLogin ? 'login' : 'signup'}`,
       type: 'post',
-      data: {
-        userName,
-        password,
-        expiration
-      },
+      data: $(e.currentTarget).serialize(),
       success: (user) => {
+        alert(user)
         get('#user-isAdmin').checked = user.isAdmin
-        // get('#chat-user').value = user.userName
         currentUser = user
         localStorage.setItem('user', JSON.stringify(user))
 
         const template = Handlebars.compile($('#user-welcome').html())
         const domTemplate = template({ userName: user.userName, secondsDiff: expiration })
 
-        //const userTemplate = $('#user-welcome').html()
         $('#user-form').html(domTemplate)
-        //$('#user-name').html(user.userName)
-
         cartGet()
       },
       error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
@@ -102,7 +93,7 @@ const userGet = (e) => {
         const userTemplate = $('#user-login').html()
 
         $('#user-form').html(userTemplate)
-        $('#user-name').focus()
+        $('#username').focus()
         $('#cart').html('')
       },
       error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
