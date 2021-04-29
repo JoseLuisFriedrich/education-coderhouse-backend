@@ -7,7 +7,7 @@ import * as userController from '../controllers/userController'
 import { IUser } from '../interfaces/userInterface'
 
 export const passportRouter = (router: Router) => {
-  router.post('/signup', passport.authenticate('signup'), (req, res) => res.status(200).send(req.user))
+  router.post('/signup/:expiration', passport.authenticate('signup'), (req, res) => res.status(200).send(req.user))
   router.post('/login', passport.authenticate('login'), (req, res) => res.status(200).send(req.user))
   router.get('/logout', (req, res) => {
     req.logout()
@@ -67,7 +67,7 @@ const passportAuth = (app: any) => {
             user.userName = userName
             user.isAdmin = false
             user.loginDate = new Date().toISOString()
-            user.expiration = 60 //Number(user.expiration)
+            user.expiration = Number(req.originalUrl.replace('/api/user/signup/', '')) //TODO: do better
             user.password = userController.createHash(password)
 
             userController.setUser(req, user)

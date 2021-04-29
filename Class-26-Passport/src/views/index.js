@@ -67,11 +67,10 @@ const userGet = (e) => {
     const isLogin = e.originalEvent.submitter.defaultValue === 'Iniciar Sesión'
 
     $.ajax({
-      url: `/api/user/${isLogin ? 'login' : 'signup'}`,
+      url: `/api/user/${isLogin ? 'login' : 'signup/' + expiration}`,
       type: 'post',
       data: $(e.currentTarget).serialize(),
       success: (user) => {
-        alert(user)
         get('#user-isAdmin').checked = user.isAdmin
         currentUser = user
         localStorage.setItem('user', JSON.stringify(user))
