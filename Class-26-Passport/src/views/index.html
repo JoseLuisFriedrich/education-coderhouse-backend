@@ -152,7 +152,7 @@
   <script id="template-chat-row" type="text/x-handlebars-template">
     <tr>
       <td>{{this.date}}</td>
-      <td>{{this.user.username}}</td>
+      <td>{{this.user.userName}}</td>
       <td>{{this.text}}</td>
     </tr>
   </script>
@@ -229,7 +229,7 @@
   <script id="user-login" type="text/x-handlebars-template">
     <input type="hidden" id="user-type" value="login">
     <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required>
-    <input type="text" id="password" name="password" placeholder="Contraseña" required>
+    <input type="password" id="password" name="password" placeholder="Contraseña" required >
     <select id='user-expiration'>
       <option value='600'>Expiración 600 segundos</option>
       <option value='30'>Expiración 30 segundos</option>

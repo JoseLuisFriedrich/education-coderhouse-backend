@@ -27,7 +27,7 @@ export const productMockGet = async (req: Request, res: Response) => {
 
   for (let i = 0; i < limit; i++) {
     const product = new db.Product({
-      id: i + 1,
+      id: i + 1, //TODO: remove
       title: faker.commerce.productName(),
       price: Math.floor(Math.random() * 100),
       thumbnail: images[Math.floor(Math.random() * images.length)],

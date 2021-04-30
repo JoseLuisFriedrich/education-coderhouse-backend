@@ -8,7 +8,7 @@ import { IUser } from '../interfaces/userInterface'
 
 export const passportRouter = (router: Router) => {
   router.post('/signup/:expiration', passport.authenticate('signup'), (req, res) => res.status(200).send(req.user))
-  router.post('/login', passport.authenticate('login'), (req, res) => res.status(200).send(req.user))
+  router.post('/login/:expiration', passport.authenticate('login'), (req, res) => res.status(200).send(req.user))
   router.get('/logout', (req, res) => {
     req.logout()
     res.status(200).send('OK')
@@ -33,6 +33,11 @@ const passportAuth = (app: any) => {
             //exists
             if (userController.isValidPassword(password, user.password)) {
               //right pass
+              user.loginDate = new Date().toISOString()
+              user.expiration = Number(req.originalUrl.split('/').pop())
+              user.password = ''
+
+              userController.setUser(req, user)
               return done(null, user)
             } else {
               //wrong pass
@@ -67,12 +72,13 @@ const passportAuth = (app: any) => {
             user.userName = userName
             user.isAdmin = false
             user.loginDate = new Date().toISOString()
-            user.expiration = Number(req.originalUrl.replace('/api/user/signup/', '')) //TODO: do better
+            user.expiration = Number(req.originalUrl.split('/').pop())
             user.password = userController.createHash(password)
 
             userController.setUser(req, user)
             await dbUser.userInsert(user)
 
+            user.password = ''
             return done(null, user)
           }
         } catch (ex) {

@@ -7,9 +7,8 @@ const MessageSchema: Schema = new Schema({
   date: { type: String, required: true },
   text: { type: String, required: true },
   user: {
-    id: { type: String, require: true },
-    username: { type: String, require: true },
-    isAdmin: { type: String, require: true },
+    _id: { type: String, require: true },
+    userName: { type: String, require: true },
   },
 })
 

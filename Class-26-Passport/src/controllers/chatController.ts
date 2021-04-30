@@ -6,7 +6,7 @@ import * as db from '../models/chatModel'
 import { normalize, schema } from 'normalizr'
 
 const normalizeData = (messages): any => {
-  const userSchema = new schema.Entity('user')
+  const userSchema = new schema.Entity('user', {}, { idAttribute: '_id' })
   const messageSchema = new schema.Entity('message', { user: userSchema }, { idAttribute: '_id' })
   const normalizedData = normalize(JSON.parse(JSON.stringify(messages)), [messageSchema])
 
@@ -23,9 +23,8 @@ export const onConnection = async (io: any, socket: any) => {
   // messageSend
   socket.on('chat', async (message: IMessage) => {
     message.date = new Date().toLocaleTimeString()
-    message.user.userName = message.user.userName.replace('[AUTOGENERADO] ', '')
-
     // persist
+
     const persistedMessage = await db.messageInsert(message)
 
     // emit

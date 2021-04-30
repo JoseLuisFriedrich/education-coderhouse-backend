@@ -67,7 +67,7 @@ const userGet = (e) => {
     const isLogin = e.originalEvent.submitter.defaultValue === 'Iniciar Sesión'
 
     $.ajax({
-      url: `/api/user/${isLogin ? 'login' : 'signup/' + expiration}`,
+      url: `/api/user/${isLogin ? 'login' : 'signup'}/${expiration}`,
       type: 'post',
       data: $(e.currentTarget).serialize(),
       success: (user) => {
