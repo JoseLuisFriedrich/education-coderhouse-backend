@@ -1,7 +1,7 @@
 import bCrypt from 'bcrypt'
 import { Request, Response } from 'express'
 import { IUser } from '../interfaces/userInterface'
-import * as db from '../models/userModel'
+// import * as db from '../models/userModel'
 
 // helpers
 const getUser = (req: Request): IUser => {
@@ -24,35 +24,35 @@ export const isValidPassword = (password1, password2) => {
 }
 
 // main
-export const userGet = async (req: Request, res: Response) => {
-  const user: IUser = { ...req.body }
+// export const userGet = async (req: Request, res: Response) => {
+//   const user: IUser = { ...req.body }
 
-  const dbUser = await db.userGetByUserName(user.userName)
-  if (dbUser && isValidPassword(user.password, dbUser.password)) {
-    dbUser.loginDate = new Date().toISOString()
-    dbUser.expiration = Number(user.expiration)
-    setUser(req, user)
-    res.status(200).send(dbUser.toObject())
-  } else {
-    res.status(409).send('user does not exists / incorrect')
-  }
-}
+//   const dbUser = await db.userGetByUserName(user.userName)
+//   if (dbUser && isValidPassword(user.password, dbUser.password)) {
+//     dbUser.loginDate = new Date().toISOString()
+//     dbUser.expiration = Number(user.expiration)
+//     setUser(req, user)
+//     res.status(200).send(dbUser.toObject())
+//   } else {
+//     res.status(409).send('user does not exists / incorrect')
+//   }
+// }
 
-export const userCreate = async (req: Request, res: Response) => {
-  const user: IUser = { ...req.body }
+// export const userCreate = async (req: Request, res: Response) => {
+//   const user: IUser = { ...req.body }
 
-  if (await db.userGetByUserName(user.userName)) {
-    res.status(409).send('user already exists')
-  } else {
-    user.isAdmin = false
-    user.loginDate = new Date().toISOString()
-    user.expiration = Number(user.expiration)
-    user.password = createHash(user.password)
-    setUser(req, user)
-    await db.userInsert(user)
-    res.status(201).send(user)
-  }
-}
+//   if (await db.userGetByUserName(user.userName)) {
+//     res.status(409).send('user already exists')
+//   } else {
+//     user.isAdmin = false
+//     user.loginDate = new Date().toISOString()
+//     user.expiration = Number(user.expiration)
+//     user.password = createHash(user.password)
+//     setUser(req, user)
+//     await db.userInsert(user)
+//     res.status(201).send(user)
+//   }
+// }
 
 export const userUpdateIsAdmin = (req: Request, res: Response) => {
   const user = getUser(req)
@@ -62,13 +62,13 @@ export const userUpdateIsAdmin = (req: Request, res: Response) => {
   res.status(200).send(user)
 }
 
-export const userLogout = (req: Request, res: Response) => {
-  req.session?.destroy(err => {
-    if (err) {
-      res.status(500).send({ status: 'ERROR', body: err })
-      return
-    }
+// export const userLogout = (req: Request, res: Response) => {
+//   req.session?.destroy(err => {
+//     if (err) {
+//       res.status(500).send({ status: 'ERROR', body: err })
+//       return
+//     }
 
-    res.status(200).send('ok')
-  })
-}
+//     res.status(200).send('ok')
+//   })
+// }
