@@ -17,7 +17,7 @@ La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets
 
 ```
 git clone https://github.com/JoseLuisFriedrich/coderhouse-backend
-cd coderhouse-backend\Class-25-MongoDbSession
+cd coderhouse-backend\Class-27-Auth-Facebook
 npm i
 npm run dev
 ```
