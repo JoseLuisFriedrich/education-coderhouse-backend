@@ -11,7 +11,7 @@ La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets
 | Tipo                | Valor
 |---------------------|-----------------------------
 | Usuario             | coder_gtzsozt_user@tfbnw.net
-| Password            | coder123
+| Contraseña          | coder123
 
 # Setup (Windows)
 
