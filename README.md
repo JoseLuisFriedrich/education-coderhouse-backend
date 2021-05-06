@@ -6,18 +6,16 @@ Proyecto del curso Coderhouse BackEnd.
 
 La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets, Template Engines (HBS, EJS, PUG), DataBase (MySQL, SQLite3, MongoDB):
 
-# .env
+# Usuario de test Facebook
 
-| Configuración       | Descripción                  | Ejemplo
-|---------------------|------------------------------|-----------------------------------------
-| DB_CONNECTION       | Connection string MongoDB    | mongodb://127.0.0.1/coderhouse_ecommerce
-| APP_PORT            | Puerto Node.js               | 8080
+| Usuario             | coder_gtzsozt_user@tfbnw.net
+| Password            | coder123
 
 # Setup (Windows)
 
 ```
 git clone https://github.com/JoseLuisFriedrich/coderhouse-backend
-cd coderhouse-backend\Class-27-Auth-Facebook
+cd coderhouse-backend\Class-28-ChildProcess
 npm i
 npm run dev
 ```
