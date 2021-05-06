@@ -16,19 +16,16 @@ const facebookAuth = (app: any) => {
         clientID,
         clientSecret,
         callbackURL: '/api/user/facebook/login/callback',
-        profileFields: ['id', 'displayName', 'photos', 'emails'],
-        // scope: ['email'],
+        profileFields: ['id', 'displayName', 'photos'],
       },
       async (accessToken, refreshToken, profile, done) => {
-        const user = await dbUser.userGetById(profile.id) //ById
+        const user = await dbUser.userGetById(profile.id)
 
         try {
           if (user) {
-            //exists
             //userController.setUser(req, user)
             return done(null, user)
           } else {
-            //don't exists
             const pictureUrl = profile.photos && profile.photos.length > 0 ? profile.photos[0].value : ''
             const newUser = new dbUser.User({
               id: profile.id,
@@ -37,7 +34,7 @@ const facebookAuth = (app: any) => {
               isAdmin: false,
             })
 
-            // userController.setUser(req, user)
+            // userController.setUser(req, newUser)
             await dbUser.userInsert(newUser)
 
             return done(null, user)

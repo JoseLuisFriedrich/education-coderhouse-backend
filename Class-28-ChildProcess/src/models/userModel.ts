@@ -13,10 +13,6 @@ const UserSchema: Schema = new Schema({
 // class
 export const User: Model<IUser> = model('User', UserSchema)
 
-// export const userGetByUserName = async userName => {
-//   return await User.findOne({ userName: userName })
-// }
-
 export const userGetById = async id => {
   return await User.findOne({ id: id })
 }

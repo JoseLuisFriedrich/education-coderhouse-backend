@@ -32,16 +32,13 @@ socket.on('products', products => onProducts(products))
 // init
 const isUserValid = () => {
   let user = localStorage.getItem('user')
-  //let secondsDiff = -1
 
   if (user !== null) {
     user = JSON.parse(user)
-    // secondsDiff = Number(user.expiration - Math.abs((new Date(new Date().toISOString()) - new Date(user.loginDate).getTime()) / 1000))
-    // user.secondsDiff = parseInt(secondsDiff)
     currentUser = user
   }
 
-  const isValid = user !== null //&& secondsDiff > 0
+  const isValid = user !== null
   return isValid
 }
 
@@ -59,10 +56,6 @@ const init = () => {
     url: `/api/user/isAuthenticated`,
     type: 'get',
     success: (user) => {
-      // let localUser = localStorage.getItem('user')
-      // if (localUser !== null) {
-      //   localUser = JSON.parse(localUser)
-      // }
       get('#user-isAdmin').checked = user.isAdmin
 
       currentUser = user
@@ -76,16 +69,12 @@ const init = () => {
     },
     error: (xhr, _, thrownError) => {
       const userTemplate = $('#user-login').html()
-
       $('#user-form').html(userTemplate)
-      // $('#username').focus()
-      // $('#cart').html('')
     }
   })
 }
 
 // test
-
 const testLongProcessGet = (e) => {
   e.preventDefault()
   get('#info-data').value = 'Ejecucando subproceso en background...'
@@ -115,7 +104,6 @@ const userGet = (e) => {
       const userTemplate = $('#user-login').html()
 
       $('#user-form').html(userTemplate)
-      // $('#username').focus()
       $('#cart').html('')
     },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
@@ -129,7 +117,7 @@ const userUpdateIsAdmin = () => {
     return
   }
 
-  const userId = currentUser.id //get('#user-user').value
+  const userId = currentUser.id
   const isAdmin = get('#user-isAdmin').checked
 
   $.ajax({
@@ -188,7 +176,7 @@ const chatDeleteAll = (e) => {
 
 let isFirstMessage = true
 const onChatMessages = (messages) => {
-  // denormalize result
+  // denormalize
   const userSchema = new normalizr.schema.Entity('user')
   const messageSchema = new normalizr.schema.Entity('message', { user: userSchema }, { idAttribute: '_id' })
   const denormalizedMessages = normalizr.denormalize(messages.result, [messageSchema], messages.entities)
@@ -228,11 +216,6 @@ const onProducts = (products) => {
     const dom = template(product)
 
     $('#product-row').append(dom)
-
-    // if (addToFilter) {
-    //   // filter
-    //   $('#product-filter-title').append(new Option(product.title, product.id))
-    // }
   })
 }
 
@@ -250,15 +233,6 @@ const productMockData = (e) => {
     success: (payload) => {
       $('#product-row').empty()
       onProducts(payload)
-
-      // payload.forEach(product => {
-      //   alert(product.id + product.title + product.price + product.thumbnail)
-      //   // id: 1, jlf
-      //   // title: 'string',
-      //   // price: 22,
-      //   // thumbnail: 'string',
-
-      // })
     },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
@@ -301,27 +275,6 @@ const productAddToCart = (e) => {
   })
 }
 
-// const productGetByTitle = (e) => {
-//   const index = e.target.selectedIndex
-//   const title = e.target[index].text
-//   const url = index === 0 ? `/api/products` : `/api/products/${title}/title`
-
-//   $.ajax({
-//     url: url,
-//     type: 'get',
-//     dataType: 'json',
-//     contentType: 'application/json',
-//     // data: { title: title },
-//     success: (payload) => {
-//       $('#product-row').empty()
-
-//       // onProducts(index === 0 ? payload : [payload])
-//       onProducts(payload)
-//     },
-//     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
-//   })
-// }
-
 const productGetByTitle = (e) => {
   const title = e.target.value
   const url = (title === '') ? `/api/products` : `/api/products/${title}/title`
@@ -331,11 +284,9 @@ const productGetByTitle = (e) => {
     type: 'get',
     dataType: 'json',
     contentType: 'application/json',
-    // data: { title: title },
     success: (payload) => {
       $('#product-row').empty()
 
-      // onProducts(index === 0 ? payload : [payload], false)
       onProducts(payload)
     },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
@@ -373,12 +324,6 @@ const productPatch = (e) => {
   $.ajax({
     url: `/api/products/${id}/${field}`,
     type: 'patch',
-    success: () => {
-      //filter
-      // if (field === 'title') {
-      //   $(`#product-filter-title option[value="${id}"]`).text(e.target.value)
-      // }
-    },
     data: { [field]: e.target.value },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
@@ -426,10 +371,6 @@ const cartRefresh = (payload) => {
 
     $('#cart-row').append(dom)
   })
-
-  // $('html, body').animate({
-  //   scrollTop: $("#cartTitle").offset().top
-  // }, 100);
 }
 
 const cartDelete = (e) => {
@@ -444,7 +385,6 @@ const cartDelete = (e) => {
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
 }
-
 
 const storageClear = () => {
   localStorage.clear()

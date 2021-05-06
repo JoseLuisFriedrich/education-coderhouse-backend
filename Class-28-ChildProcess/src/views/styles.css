@@ -88,12 +88,12 @@ p {
   /* left: 1700px; */
 }
 
-.info {
-  background-color: #4d5da5;
-}
-
 .user {
   background-color: #ff576b;
+}
+
+.info {
+  background-color: #4d5da5;
 }
 
 .chat {
