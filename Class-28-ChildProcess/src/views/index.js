@@ -88,6 +88,7 @@ const init = () => {
 
 const testLongProcessGet = (e) => {
   e.preventDefault()
+  get('#info-data').value = 'Ejecucando subproceso en background...'
   $('#text-long-process-message').addClass('show')
   $('#test-long-process').hide()
 
@@ -148,6 +149,9 @@ const userUpdateIsAdmin = () => {
 }
 
 const userLoginFacebook = () => {
+  $('#user-login-facebook').prop('disabled', true)
+  $('#user-login-facebook').prop('value', 'Espere por favor...')
+
   location.href = '/api/user/facebook/login'
 }
 
