@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "devCluster": "nodemon src/index.ts 8080 Cluster 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "devCluster": "nodemon src/index.ts 8080 Cluster 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "prodForever": "npm run build & forever start ../bin/index.js 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
+    "prodPM2Fork": "npm run build & pm2 start ../bin/index.js --name=JLF --watch -- 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
+    "prodPM2Cluster": "npm run build & pm2 start ../bin/index.js --name=JLF --watch -i max -- 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
+    "build": "tsc & npm run buildViews & npm run buildModules",
+    "buildViews": "xcopy src\\views\\* ..\\bin\\views /e /i /h /y",
+    "buildModules": "xcopy node_modules ..\\bin\\node_modules /e /i /h /y"
   },
   "author": "",
   "license": "ISC",
