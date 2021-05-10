@@ -41,7 +41,7 @@ export const productMockGet = async (req: Request, res: Response) => {
   res.status(200).send(products)
 }
 
-export const productMockSlowUnblockingGet = async (req: Request, res: Response) => {
+export const randomGet = async (req: Request, res: Response) => {
   const limit = req.params.limit || 100000000
   const subProcess = fork('./src/controllers/productMockController')
 
