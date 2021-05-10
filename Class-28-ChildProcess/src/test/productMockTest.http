@@ -4,5 +4,5 @@ GET http://localhost:8080/api/productMock
 GET http://localhost:8080/api/productMock?limit=20
 ###
 
-GET http://localhost:8080/api/productMock/slowUnblockingProcess/10
+GET http://localhost:8080/api/productMock/random/10
 ###

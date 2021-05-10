@@ -82,7 +82,7 @@ const testLongProcessGet = (e) => {
   $('#test-long-process').hide()
 
   $.ajax({
-    url: `/api/productMock/slowUnblockingProcess/2000000`,
+    url: `/api/productMock/random/2000000`,
     type: 'get',
     success: (payload) => {
       get('#info-data').value = JSON.stringify(payload, undefined, 4)

@@ -5,7 +5,7 @@ const productMockRouter = () => {
   const router: Router = express.Router()
 
   router.get('/:limit?', productMockController.productMockGet)
-  router.get('/slowUnblockingProcess/:limit?', productMockController.productMockSlowUnblockingGet)
+  router.get('/random/:limit?', productMockController.productMockSlowUnblockingGet)
 
   return router
 }
