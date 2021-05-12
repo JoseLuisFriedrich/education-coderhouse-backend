@@ -4,7 +4,7 @@ Proyecto del curso Coderhouse BackEnd.
 	
 # Descripción
 
-La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets, Template Engines (HBS, EJS, PUG), DataBase (MySQL, SQLite3, MongoDB):
+La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets, Template Engines (HBS, EJS, PUG), DataBase (MySQL, SQLite3, MongoDB), Nginx, PM2, Forever:
 
 # Usuario de test Facebook
 
@@ -17,7 +17,7 @@ La aplicación se realizó utilizando HTML, CSS, Node.js, Observable, WebSockets
 
 ```
 git clone https://github.com/JoseLuisFriedrich/coderhouse-backend
-cd coderhouse-backend\Class-28-ChildProcess
+cd coderhouse-backend\Class-30-Nginx
 npm i
 npm run dev
 ```
