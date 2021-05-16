@@ -32,9 +32,9 @@ if (cluster.isMaster && CLUSTER) {
     cluster.fork()
   })
 } else {
-  // logger.log('info', 'test info')
-  // logger.log('warn', 'test warn')
-  // logger.log('error', 'test error')
+  logger.log('info', 'test info')
+  logger.log('warn', 'test warn')
+  logger.log('error', 'test error')
 
   // config
   dotenv.config()
