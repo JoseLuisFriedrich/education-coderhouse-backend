@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>José Luis Friedrich</title>
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="content.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+
+  <script defer src='socket.io/socket.io.js'></script>
+  <script defer src="misc.js"></script>
+  <script defer src="index.js"></script>
+</head>
+
+<body>
+  <section class="chat">
+    <div>
+      <h3 id='chat-title'>Insertar mail y enviar mail</h3>
+
+      <form id='chat-form' enctype="application/x-www-form-urlencoded" method="POST">
+        <input type="text" id="mail" name="mail" placeholder="Mail" required>
+        <input type="submit" value="Insertar Mail">
+      </form>
+    </div>
+  </section>
+
+  <section class="info">
+    <div>
+      <h3 id='info-title'>Información Proceso</h3>
+
+      <textarea rows="21" id="info-data" name="info-data" placeholder="Cargando..." readonly wrap="soft">
+          Cargando...
+      </textarea>
+
+      <!-- <form id='info-form' enctype="application/x-www-form-urlencoded">
+        <input type="submit" id='test-long-process' name='test-long-process' value="Test Proceso Bloqueante">
+        <h1 id='text-long-process-message' name='text-long-process-message' class='hide'>
+          (debería poder seguir trabajando normalmente
+          pese a que este proceso sigue ejecutando en un subproceso no bloqueante)</h1>
+      </form> -->
+    </div>
+  </section>
+
+  <section class="misc">
+    <div>
+      <h3 id='troubleshooting-title'>¿Problemas con la página?</h3>
+
+      <form>
+        <input type="button" id='storage-clear' value="Limpiar Storage">
+      </form>
+
+      <p id='troubleshooting-description'>
+        1. Presione el botón 'Limpiar Storage'.
+        <br />2. Utilizar Google Chrome en Desktop.
+        <br />3. Resolución sugerida 2304x1440 o similar.
+        <br />4. Para probar el carrito de compras multi-usuario, abrir segunda instancia en modo incognito o distintos navegadores.
+        No es posible probarlo abriendo 2 tabs en el mismo navegador ya que se usa express-session para almacenar.
+      </p>
+    </div>
+    <div>
+      <h3 id='development-title'>Desarrollo</h3>
+      <p id='development-description'>Sitio Web fantasía desarrollado para el curso CoderHouse Backend utilizando:
+        <br />HTML, CSS, Templates (handlebars, ejs, pug), Node.js, express, express-session, Socket.io, passport, passport-facebook, cookies, normalizr
+        <br />Base de datos (MySQL, SQLite3, MongoDB), Nginx, PM2, Forever.
+      </p>
+    </div>
+  </section>
+
+  <!-- Template Chat -->
+
+  <script id="template-chat-table" type="text/x-handlebars-template">
+    <table id='#chat' class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col">Fecha</th>
+          <th scope="col">Usuario</th>
+          <th scope="col">Texto</th>
+        </tr>
+      </thead>
+      <tbody id='chat-row' />
+    </table>
+  </script>
+
+  <script id="template-chat-row" type="text/x-handlebars-template">
+    <tr>
+      <td>{{this.date}}</td>
+      <td>{{this.user.userName}}</td>
+      <td>{{this.text}}</td>
+    </tr>
+  </script>
+
+  <!-- Template Products -->
+
+  <script id="template-product-table" type="text/x-handlebars-template">
+    <table class="table table-primary productTable">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">
+            <!-- <select id='product-filter-title'>
+              <option selected>Todos</option>
+            </select> -->
+            <input id='product-filter-title' type='text' />
+          </th>
+          <th scope="col">
+            <select id='product-filter-price'>
+              <option selected>Todos</option>
+              <option selected>< 50</option>
+              <option selected>>= 50</option>
+            </select>
+          </th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Eliminar<br>Producto</th>
+          <th scope="col">Agregar<br>Carrito<br>n-veces</th>
+        </tr>
+      </thead>
+      <tbody id='product-row' />
+    </table>
+  </script>
+
+  <script id="template-product-row" type="text/x-handlebars-template">
+    <tr>
+      <td>{{this.id}}</td>
+      <td><input class='product-update-title' type='text' value='{{this.title}}' required></td>
+      <td><input class='product-update-price' type='text' value='{{this.price}}' required></td>
+      <td><img src="{{this.thumbnail}}"></td>
+      <td><i id="product-delete" name="product-delete" class="fas fa-trash-alt icon"></i></td>
+      <td><i id="product-cart" name="product-cart"  class="fas fa-cart-plus icon"></i></td>
+    </tr>
+  </script>
+
+  <!-- Template Cart -->
+
+  <script id="template-cart-table" type="text/x-handlebars-template">
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Título</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody id='cart-row' />
+    </table>
+  </script>
+
+  <script id="template-cart-row" type="text/x-handlebars-template">
+    <tr>
+      <td>{{this.id}}</td>
+      <td>{{this.title}}</td>
+      <td>$ {{this.price}}</td>
+      <td><img src="{{this.thumbnail}}"></td>
+      <td>{{this.quantity}}</td>
+      <td><i id="cart-delete" name="cart-delete" class="fas fa-trash-alt icon"></i></td>
+    </tr>
+  </script>
+
+</body>
+
+</html>
