@@ -4,20 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "devCluster": "nodemon src/index.ts 8080 Cluster 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "buildDev": "shx rm -rf ..\\bin && tsc && shx cp -r src\\views ..\\bin\\views && shx cp -r .\\.gitignore ..\\bin && shx cp -r .\\package.json ..\\bin",
-    "start": "node index.js",
-    "startNoArgs": "node index.js",
-    "startForever": "npm run build & forever start ../bin/index.js 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
-    "startPM2Fork": "pm2 start ../bin/index.js -f --name=JLF-Fork --watch -- 8081 Single 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
-    "startPM2Cluster": "pm2 start ../bin/index.js -f --name=JLF-Cluster --watch -i max -- 8082 Single 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
-    "startProf": "node -prof ../bin/index.js 8081 Single 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "startProfCluster": "node -prof ../bin/index.js 8082 Cluster 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "testPerfFork": "artillery quick --count 50 -n 20 http://localhost:8081/api/productMock/randomBlocking/100000 > ../bin/test_fork.txt",
-    "testPerfCluster": "artillery quick --count 50 -n 20 http://localhost:8082/api/productMock/randomBlocking/100000 > ../bin/test_cluster.txt",
-    "testPerfAutocannon": "ts-node src/helpers/perfHelper.ts",
-    "testPerf0x": "0x ../bin/index.js 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b us-east-2 AKIAWXXWNYTFAI5SWPB7 J0Ea6j2OG8c5+aqiE6FpneFYMHQhozdd0Ay6J4AT mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",

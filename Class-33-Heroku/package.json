@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     "devCluster": "nodemon src/index.ts 8080 Cluster 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "buildDev": "shx rm -rf ..\\bin && tsc && shx cp -r src\\views ..\\bin\\views && shx cp -r .\\.gitignore ..\\bin && shx cp -r .\\package.json ..\\bin && shx cp -r .\\Procfile ..\\bin && shx cp -r node_modules ..\\bin\\node_modules",
+    "buildDev": "shx rm -rf ..\\bin && tsc && shx cp -r src\\views ..\\bin\\views && shx cp -r {.gitignore,package.json,Procfile} ..\\bin && shx cp -r node_modules ..\\bin\\node_modules",
     "startNoArgs": "node index.js",
     "startForever": "npm run build & forever start ../bin/index.js 8080 Single 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
     "startPM2Fork": "pm2 start ../bin/index.js -f --name=JLF-Fork --watch -- 8081 Single 360436435040054 d166495a867753e9c6e24cf048d8089b mongodb+srv://root:CoderHouse123@jlf.frrsw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority --minUptime 10000 -spinSleepTime 30000",
