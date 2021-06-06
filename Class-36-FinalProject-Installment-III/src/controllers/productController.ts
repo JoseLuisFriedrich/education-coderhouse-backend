@@ -7,12 +7,14 @@ import { IProduct } from '../interfaces/productInterface'
 export const onConnection = async (io: any, socket: any) => {
   // onConnection
   const products = await db.productGet()
+
   if (products.length > 0) socket.emit('products', products)
 }
 
 // main
 export const productGet = async (req: Request, res: Response) => {
   const products = await db.productGet()
+  console.log(products)
   if (products.length > 0) {
     res.status(200).send(products)
   } else {
@@ -55,14 +57,14 @@ export const productGetByPriceRange = async (req: Request, res: Response) => {
 }
 
 export const productInsert = async (io: any, req: Request, res: Response) => {
-  const id = (await db.productGet()).length + 1 //do better
-  const product: IProduct = { id, ...req.body, price: Number(req.body.price) }
+  // const id = (await db.productGet()).length + 1 //do better
+  const product: IProduct = { ...req.body, price: Number(req.body.price) }
 
   await db.productInsert(product)
 
   io.sockets.emit('products', [product])
 
-  res.status(201).send(id.toString())
+  res.status(201).send('OK')
 }
 
 //todo

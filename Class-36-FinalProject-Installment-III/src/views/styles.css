@@ -21,6 +21,10 @@ html {
   visibility: hidden;
 }
 
+.noDisplay {
+  display: none;
+}
+
 .show {
   visibility: visible;
 }

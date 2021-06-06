@@ -176,6 +176,7 @@ const userUpdateIsAdmin = () => {
   if (!isUserValid()) {
     get('#user-isAdmin').checked = !get('#user-isAdmin').checked
     alert('Inicie sesión')
+    scrollTop()
     return
   }
 
@@ -204,6 +205,7 @@ const chatSendMessage = (e) => {
 
   if (!isUserValid()) {
     alert('Inicie sesión')
+    scrollTop()
     return
   }
 
@@ -278,6 +280,7 @@ const productMockData = (e) => {
 
   if (!isUserValid()) {
     alert('Inicie sesión')
+    scrollTop()
     return
   }
 
@@ -314,10 +317,11 @@ const productAdd = (e) => {
 const productAddToCart = (e) => {
   if (!isUserValid()) {
     alert('Inicie sesión')
+    scrollTop()
     return
   }
 
-  const id = Number($(e.target).closest('tr').find('td').html())
+  const id = $(e.target).closest('tr').find('td').html()
 
   $.ajax({
     url: `/api/cart/${id}`,
@@ -372,7 +376,7 @@ const productPatch = (e) => {
   if (e.target.value.length === 0) return
 
   const target = e.target.classList[0]
-  const id = Number($(e.target).closest('tr').find('td').html())
+  const id = $(e.target).closest('tr').find('td').html()
   const field = target === 'product-update-title' ? 'title' : 'price'
 
   $.ajax({
@@ -386,10 +390,11 @@ const productPatch = (e) => {
 const productDelete = (e) => {
   if (!isUserValid()) {
     alert('Inicie sesión')
+    scrollTop()
     return
   }
 
-  const id = Number($(e.target).closest('tr').find('td').html())
+  const id = $(e.target).closest('tr').find('td').html()
 
   $.ajax({
     url: `/api/products/${id}`,
@@ -431,7 +436,7 @@ const cartRefresh = (payload) => {
 }
 
 const cartDelete = (e) => {
-  const id = Number($(e.target).closest('tr').find('td').html())
+  const id = $(e.target).closest('tr').find('td').html()
 
   $.ajax({
     url: `/api/cart/${id}`,
@@ -442,7 +447,3 @@ const cartDelete = (e) => {
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
 }
-
-// const storageClear = () => {
-//   localStorage.clear()
-// }

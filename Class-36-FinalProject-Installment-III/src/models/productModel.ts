@@ -4,7 +4,6 @@ import { IProduct, IProductLink } from '../interfaces/productInterface'
 
 // schemas
 const ProductSchema: Schema = new Schema({
-  id: { type: Number, required: true },
   title: { type: String, required: true },
   price: { type: Number, required: true },
   thumbnail: { type: String, required: true },
@@ -23,7 +22,7 @@ export const productGet = async (): Promise<Array<IProduct>> => {
 }
 
 export const productGetById = async id => {
-  return await Product.findOne({ id: id })
+  return await Product.findOne({ _id: id })
 }
 
 export const productGetByTitle = async title => {
@@ -48,7 +47,7 @@ export const productUpdate = async (product: IProduct) => {
   let result: number | undefined = 0
 
   try {
-    result = (await Product.updateOne({ id: product.id }, product)).nModified
+    result = (await Product.updateOne({ _id: product._id }, product)).nModified
   } catch (ex) {
     logger.log('error', ex)
   }
@@ -60,7 +59,7 @@ export const productUpdateTitle = async (id, title) => {
   let result: number | undefined = 0
 
   try {
-    result = (await Product.updateOne({ id: id }, { title: title })).nModified
+    result = (await Product.updateOne({ _id: id }, { title: title })).nModified
   } catch (ex) {
     logger.log('error', ex)
   }
@@ -72,7 +71,7 @@ export const productUpdatePrice = async (id, price) => {
   let result: number | undefined = 0
 
   try {
-    result = (await Product.updateOne({ id: id }, { price: price })).nModified
+    result = (await Product.updateOne({ _id: id }, { price: price })).nModified
   } catch (ex) {
     logger.log('error', ex)
   }
@@ -84,7 +83,7 @@ export const productDelete = async id => {
   let result: number | undefined = 0
 
   try {
-    result = (await Product.deleteOne({ id: id })).deletedCount
+    result = (await Product.deleteOne({ _id: id })).deletedCount
   } catch (ex) {
     logger.log('error', ex)
   }

@@ -23,3 +23,7 @@ const setInputFilter = (textbox, inputFilter) => {
 
 // input filter
 setInputFilter(get("#price"), (value) => /^\d*\.?\d*$/.test(value))
+
+const scrollTop = () => {
+  $('html, body').animate({ scrollTop: '0px' }, 300);
+}

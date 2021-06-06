@@ -21,12 +21,12 @@ export const cartGet = (req: Request, res: Response) => {
 }
 
 export const cartInsert = async (req: Request, res: Response) => {
-  const id = Number(req.params.id)
+  const id = req.params.id
   const cart = getCart(req)
 
   const product = await db.productGetById(id)
   if (product) {
-    const existInCart = cart.products.find(p => p.id === id)
+    const existInCart = cart.products.find(p => p._id === id)
     if (existInCart) {
       existInCart.quantity += 1
     } else {
@@ -44,7 +44,7 @@ export const cartDelete = async (req: Request, res: Response) => {
   const id = req.params.id
 
   const cart = getCart(req)
-  cart.products = cart.products.filter(p => p.id !== Number(id))
+  cart.products = cart.products.filter(p => p._id !== id)
   setCart(req, cart)
   res.status(200).send(cart)
 }

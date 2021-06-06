@@ -175,7 +175,7 @@
     <table class="table table-primary productTable">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col" class="noDisplay">#</th>
           <th scope="col">
             <!-- <select id='product-filter-title'>
               <option selected>Todos</option>
@@ -200,7 +200,7 @@
 
   <script id="template-product-row" type="text/x-handlebars-template">
     <tr>
-      <td>{{this.id}}</td>
+      <td class="noDisplay">{{this._id}}</td> 
       <td><input class='product-update-title' type='text' value='{{this.title}}' required></td>
       <td><input class='product-update-price' type='text' value='{{this.price}}' required></td>
       <td><img src="{{this.thumbnail}}"></td>
@@ -215,7 +215,7 @@
     <table class="table table-primary">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col" class="noDisplay">#</th>
           <th scope="col">Título</th>
           <th scope="col">Precio</th>
           <th scope="col">Imagen</th>
@@ -229,7 +229,7 @@
 
   <script id="template-cart-row" type="text/x-handlebars-template">
     <tr>
-      <td>{{this.id}}</td>
+      <td class="noDisplay">{{this._id}}</td>
       <td>{{this.title}}</td>
       <td>$ {{this.price}}</td>
       <td><img src="{{this.thumbnail}}"></td>

@@ -1,6 +1,6 @@
 // interface
 export interface ICartProduct {
-  id: number
+  _id: string
   title: string
   price: number
   thumbnail: string
