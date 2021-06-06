@@ -37,11 +37,6 @@ export const onConnection = async (io: any, socket: any) => {
 }
 
 export const messageDeleteAll = async (req: Request, res: Response) => {
-  // if (!req.session?.user?.isAdmin) {
-  //   res.status(401).send({ message: 'User is not Admin' })
-  //   return
-  // }
-
   const deleted = db.messageDeleteAll()
   if (deleted) {
     res.status(200).send('deleted')

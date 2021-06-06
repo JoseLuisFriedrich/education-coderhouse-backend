@@ -8,7 +8,6 @@ $(document).on('submit', '#info-form', e => testLongProcessGet(e))
 
 $(document).on('submit', '#user-form', e => userGet(e))
 $(document).on('click', '#user-isAdmin', () => userUpdateIsAdmin())
-$(document).on('click', '#user-login-facebook', () => userLoginFacebook())
 
 $(document).on('submit', '#chat-form', e => chatSendMessage(e))
 $(document).on('click', '#chat-reset', e => chatDeleteAll(e))
@@ -23,7 +22,7 @@ $(document).on('submit', '#product-mock-form', e => productMockData(e))
 $(document).on('submit', '#product-form', e => productAdd(e))
 
 $(document).on('click', '#cart-delete', e => cartDelete(e))
-$(document).on('click', '#storage-clear', e => storageClear(e))
+// $(document).on('click', '#storage-clear', e => storageClear(e))
 
 // io
 socket.on('chat', messages => onChatMessages(messages))
@@ -31,18 +30,22 @@ socket.on('products', products => onProducts(products))
 
 // init
 const isUserValid = () => {
-  let user = localStorage.getItem('user')
+  if (currentUser) return true
 
-  if (user !== null) {
-    user = JSON.parse(user)
-    currentUser = user
-  }
+  return false
 
-  const isValid = user !== null
-  return isValid
+  // let user = localStorage.getItem('userobj')
+
+  // if (user !== null) {
+  //   user = JSON.parse(user)
+  //   currentUser = user
+  // }
+
+  // return (user !== null)
 }
 
 const init = () => {
+  //get info
   $.ajax({
     url: `/api/info`,
     type: 'get',
@@ -52,6 +55,21 @@ const init = () => {
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
 
+
+  //get user
+  // const template = Handlebars.compile($(isUserValid() ? '#user-welcome' : '#user-login').html())
+  // if (isUserValid()) {
+  //   const domTemplate = template({ userName: currentUser.userName, secondsDiff: currentUser.secondsDiff })
+  //   $('#user-form').html(domTemplate)
+  //   get('#user-isAdmin').checked = currentUser.isAdmin
+  // } else {
+  //   const domTemplate = template({})
+  //   $('#user-form').html(domTemplate)
+  //   $('#username').focus()
+  // }
+
+  // cartGet()
+
   $.ajax({
     url: `/api/user/isAuthenticated`,
     type: 'get',
@@ -59,7 +77,7 @@ const init = () => {
       get('#user-isAdmin').checked = user.isAdmin
 
       currentUser = user
-      localStorage.setItem('user', JSON.stringify(user))
+      // localStorage.setItem('userobj', JSON.stringify(user))
 
       const template = Handlebars.compile($('#user-welcome').html())
       const domTemplate = template(user)
@@ -68,7 +86,7 @@ const init = () => {
       cartGet()
     },
     error: (xhr, _, thrownError) => {
-      localStorage.removeItem('user')
+      // localStorage.removeItem('userobj')
       const userTemplate = $('#user-login').html()
       $('#user-form').html(userTemplate)
     }
@@ -97,18 +115,61 @@ const testLongProcessGet = (e) => {
 const userGet = (e) => {
   e.preventDefault()
 
-  $.ajax({
-    url: `/api/user/logout`,
-    type: 'get',
-    success: () => {
-      localStorage.clear()
-      const userTemplate = $('#user-login').html()
+  const userType = get('#user-type').value
+  if (userType === 'login') {
+    const isLogin = e.originalEvent.submitter.defaultValue === 'Iniciar Sesión'
 
-      $('#user-form').html(userTemplate)
-      $('#cart').html('')
-    },
-    error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
-  })
+    $.ajax({
+      url: `/api/user/${isLogin ? 'login' : 'signup'}`,
+      type: 'post',
+      data: $(e.currentTarget).serialize(),
+      success: (user) => {
+        get('#user-isAdmin').checked = user.isAdmin
+
+        // localStorage.setItem('userobj', JSON.stringify(user))
+        currentUser = user
+
+        const template = Handlebars.compile($('#user-welcome').html())
+        const domTemplate = template({ userName: user.userName })
+
+        $('#user-form').html(domTemplate)
+
+        cartGet()
+      },
+      error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+    })
+  } else {
+    $.ajax({
+      url: `/api/user/logout`,
+      type: 'get',
+      success: () => {
+        // localStorage.clear()
+
+        const userTemplate = $('#user-login').html()
+
+        $('#user-form').html(userTemplate)
+        $('#username').focus()
+        $('#cart').html('')
+      },
+      error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+    })
+  }
+
+  // e.preventDefault()
+
+  // $.ajax({
+  //   url: `/api/user/logout`,
+  //   type: 'get',
+  //   success: () => {
+  //     localStorage.clear()
+  //     const userTemplate = $('#user-login').html()
+
+  //     $('#user-form').html(userTemplate)
+  //     $('#username').focus()
+  //     $('#cart').html('')
+  //   },
+  //   error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
+  // })
 }
 
 const userUpdateIsAdmin = () => {
@@ -130,18 +191,11 @@ const userUpdateIsAdmin = () => {
     success: () => {
       if (isUserValid()) {
         currentUser.isAdmin = isAdmin
-        localStorage.setItem('user', JSON.stringify(currentUser))
+        // localStorage.setItem('userobj', JSON.stringify(currentUser))
       }
     },
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
-}
-
-const userLoginFacebook = () => {
-  $('#user-login-facebook').prop('disabled', true)
-  $('#user-login-facebook').prop('value', 'Espere por favor...')
-
-  location.href = '/api/user/facebook/login'
 }
 
 // chat
@@ -154,7 +208,6 @@ const chatSendMessage = (e) => {
   }
 
   const text = get('#chat-text')
-
   socket.emit('chat', {
     text: text.value,
     user: currentUser
@@ -350,12 +403,15 @@ const productDelete = (e) => {
 
 // cart
 const cartGet = () => {
+  if (!isUserValid()) return
+
   $.ajax({
     url: `/api/cart`,
     type: 'get',
     success: (cart) => cartRefresh(cart)
   })
 }
+
 const cartRefresh = (payload) => {
   if (!payload.products.length) return
 
@@ -387,6 +443,6 @@ const cartDelete = (e) => {
   })
 }
 
-const storageClear = () => {
-  localStorage.clear()
-}
+// const storageClear = () => {
+//   localStorage.clear()
+// }

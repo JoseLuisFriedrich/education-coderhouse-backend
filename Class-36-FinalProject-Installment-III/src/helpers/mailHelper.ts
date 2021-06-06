@@ -11,7 +11,6 @@ export const send = async text => {
       pass: msc.arg(5, process.env.MAIL_PASSWORD),
     },
   })
-
   await transporter.sendMail({
     from: 'Coderhouse <coderhouse@jlf.com.ar>',
     to: 'coderhouse@jlf.com.ar',
@@ -19,7 +18,6 @@ export const send = async text => {
     text: text,
     html: text,
   })
-
   // test ethereal
   // host: 'smtp.ethereal.email'
   // user: 'eleanore.kuhlman1@ethereal.email'
@@ -28,7 +26,6 @@ export const send = async text => {
   // secure: false
   // from: '"Coderhouse 👻" <eleanore.kuhlman1@ethereal.email>'
   // to: 'eleanore.kuhlman1@ethereal.email'
-
   // test gmail
   // {
   //   service: 'gmail',

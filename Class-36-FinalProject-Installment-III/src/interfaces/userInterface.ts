@@ -2,8 +2,10 @@ import { Document } from 'mongoose'
 
 // interface
 export interface IUser extends Document {
-  id: string
+  // id: string
   userName: string
-  pictureUrl: string
+  password: string
   isAdmin: boolean
+  loginDate: string
+  // expiration: number
 }

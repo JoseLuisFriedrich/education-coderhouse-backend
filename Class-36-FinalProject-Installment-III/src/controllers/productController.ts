@@ -102,7 +102,7 @@ export const productUpdatePrice = (req: Request, res: Response) => {
 }
 
 export const productDelete = (req: Request, res: Response) => {
-  if (!req.session?.user?.isAdmin) {
+  if (!req.isAuthenticated() || !req.session?.passport.user.isAdmin) {
     res.status(401).send({ message: 'User is not Admin' })
     return
   }

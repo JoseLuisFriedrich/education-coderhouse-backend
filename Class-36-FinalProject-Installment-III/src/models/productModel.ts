@@ -1,8 +1,8 @@
 import { model, Model, Schema } from 'mongoose'
 import logger from '../helpers/logHelper'
-import { IProduct } from '../interfaces/productInterface'
+import { IProduct, IProductLink } from '../interfaces/productInterface'
 
-// schema
+// schemas
 const ProductSchema: Schema = new Schema({
   id: { type: Number, required: true },
   title: { type: String, required: true },
@@ -10,8 +10,13 @@ const ProductSchema: Schema = new Schema({
   thumbnail: { type: String, required: true },
 })
 
+const ProductLinkSchema: Schema = new Schema({
+  url: { type: String, required: true },
+})
+
 // class
 export const Product: Model<IProduct> = model('Product', ProductSchema)
+export const ProductLink: Model<IProductLink> = model('ProductLinks', ProductLinkSchema)
 
 export const productGet = async (): Promise<Array<IProduct>> => {
   return await Product.find({}).sort({ title: 1 })
@@ -97,4 +102,8 @@ export const productDeleteAll = async () => {
   }
 
   return result === 1
+}
+
+export const productLinksGet = async (): Promise<Array<IProductLink>> => {
+  return await ProductLink.find()
 }

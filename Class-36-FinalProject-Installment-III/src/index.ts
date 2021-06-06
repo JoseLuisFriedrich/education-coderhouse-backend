@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 import helmet from 'helmet'
 import cluster from 'cluster'
 import cookieParser from 'cookie-parser'
-import facebookAuth from './auth/facebookAuth'
+import localAuth from './auth/passportLocalAuth'
 import compression from 'compression'
 import logger from './helpers/logHelper'
 
@@ -65,7 +65,7 @@ if (cluster.isMaster && CLUSTER) {
   http.listen(PORT, () => logger.log('info', `⚡️ http://localhost:${PORT} - 💻 pid: ${process.pid} - ${path.join(__dirname, 'views')}`))
 
   // auth
-  facebookAuth(app)
+  localAuth(app)
 
   // database
   db.connect()

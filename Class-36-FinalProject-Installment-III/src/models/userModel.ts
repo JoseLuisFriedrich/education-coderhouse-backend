@@ -5,17 +5,23 @@ import { IUser } from '../interfaces/userInterface'
 
 // schema
 const UserSchema: Schema = new Schema({
-  id: { type: String, required: true },
+  // id: { type: String, required: true },
   userName: { type: String, required: true },
-  pictureUrl: { type: String, required: false },
   isAdmin: { type: Boolean, required: true },
+  password: { type: String, required: true },
+  // loginDate: { type: String, required: true },
+  // expiration: { type: Number, required: true },
 })
 
 // class
 export const User: Model<IUser> = model('User', UserSchema)
 
-export const userGetById = async id => {
-  return await User.findOne({ id: id })
+// export const userGetById = async id => {
+//   return await User.findOne({ id: id })
+// }
+
+export const userGetByUserName = async userName => {
+  return await User.findOne({ userName: userName })
 }
 
 export const userInsert = async (user: IUser) => {

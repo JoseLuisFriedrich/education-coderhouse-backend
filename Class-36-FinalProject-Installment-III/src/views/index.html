@@ -127,26 +127,21 @@
   </section>
 
   <section class="misc">
-    <div>
+    <!-- <div>
       <h3 id='troubleshooting-title'>¿Problemas con la página?</h3>
 
-      <form>
-        <input type="button" id='storage-clear' value="Limpiar Storage">
-      </form>
-
       <p id='troubleshooting-description'>
-        1. Presione el botón 'Limpiar Storage'.
-        <br />2. Utilizar Google Chrome en Desktop.
-        <br />3. Resolución sugerida 2304x1440 o similar.
-        <br />4. Para probar el carrito de compras multi-usuario, abrir segunda instancia en modo incognito o distintos navegadores.
+        <br />1. Utilizar Google Chrome en Desktop.
+        <br />2. Resolución sugerida 2304x1440 o similar.
+        <br />3. Para probar el carrito de compras multi-usuario, abrir segunda instancia en modo incognito o distintos navegadores.
         No es posible probarlo abriendo 2 tabs en el mismo navegador ya que se usa express-session para almacenar.
       </p>
-    </div>
+    </div> -->
     <div>
       <h3 id='development-title'>Desarrollo</h3>
-      <p id='development-description'>Sitio Web fantasía desarrollado para el curso CoderHouse Backend utilizando:
-        <br />HTML, CSS, Templates (handlebars, ejs, pug), Node.js, express, express-session, Socket.io, passport, passport-facebook, cookies, normalizr
-        <br />Base de datos (MySQL, SQLite3, MongoDB), Nginx, PM2, Forever.
+      <p id='development-description'>Sitio Web fantasía desarrollado para el curso CoderHouse Backend practicando:
+        <br />HTML, CSS, Templates (handlebars, ejs, pug), Node.js, express, express-session, Socket.io, passport, passport-local, passport-facebook, cookies, normalizr
+        <br />Base de datos (MySQL, SQLite3, MongoDB), Nginx, PM2, Forever, 0x, artillery.
       </p>
     </div>
   </section>
@@ -245,24 +240,16 @@
 
   <script id="user-login" type="text/x-handlebars-template">
     <input type="hidden" id="user-type" value="login">
-    <h1>Usuario no logueado</h1>
-    <br>
-    <h4>Facebook para prueba de login</h4>
-    <h4>Usuario: <b>coder_duaemke_user@tfbnw.net</b></h4>
-    <h4>Contraseña: <b>coder123</b></h4>
-    <br><br>
-    <h4>Visualizar notificaciones por mail</h4>
-    <h4><b><a href="https://webmail.ferozo.com" target="_blank">https://webmail.ferozo.com</a></b></h4>
-    <h4>Usuario: <b>coderhouse@jlf.com.ar</b></h4>
-    <h4>Contraseña: <b>shxV@HW2aA</b></h4>
-    <input id='user-login-facebook' name='user-login-facebook' type="button" value="Iniciar Sesión">
+    <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required>
+    <input type="password" id="password" name="password" placeholder="Contraseña" required >
+    <input type="submit" value="Iniciar Sesión">
+    <input type="submit" value="Registrar">
   </script>
 
   <script id="user-welcome" type="text/x-handlebars-template">
     <input type="hidden" id="user-type" value="welcome">
-    <img src={{this.pictureUrl}} alt="">
-    <h3>¡{{this.userName}}!</h3>
-    <br>
+    <h3>¡{{this.userName}} logueado!</h3>
+    <!-- <h4>Su sesión vence en {{this.secondsDiff}} segundos.</h4> -->
     <input type="submit" value="Finalizar Sesión">
   </script>
 </body>

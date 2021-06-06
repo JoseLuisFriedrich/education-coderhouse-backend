@@ -1,5 +1,6 @@
 import { Twilio } from 'twilio'
 import * as msc from './miscHelper'
+import logger from './logHelper'
 
 export const send = async text => {
   const sid = msc.arg(6, process.env.SMS_SID)
@@ -12,8 +13,8 @@ export const send = async text => {
       from: 'whatsapp:+14155238886',
       to: 'whatsapp:+5491156341378',
     })
-    .then(message => console.log(message.sid))
-    .catch(console.log)
+    .then(message => logger.log('info', message.sid))
+    .catch(logger.log)
 }
 
 // SMS
