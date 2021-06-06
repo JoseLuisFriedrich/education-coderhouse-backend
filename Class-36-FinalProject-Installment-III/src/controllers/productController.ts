@@ -14,7 +14,7 @@ export const onConnection = async (io: any, socket: any) => {
 // main
 export const productGet = async (req: Request, res: Response) => {
   const products = await db.productGet()
-  console.log(products)
+
   if (products.length > 0) {
     res.status(200).send(products)
   } else {
