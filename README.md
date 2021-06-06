@@ -28,6 +28,8 @@ npm i
 
 # Alternativas
 
+| npm run                        | explicación
+|--------------------------------|------------------------------
 | npm run buildDev               | compilar a javascript (necesario para los sigientes start/test)
 | npm run startForever           | ejecutar con Forever
 | npm run startPM2Fork           | ejecutar con PM2 fork
