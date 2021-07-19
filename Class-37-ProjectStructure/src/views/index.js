@@ -55,7 +55,6 @@ const init = () => {
     error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
   })
 
-
   //get user
   // const template = Handlebars.compile($(isUserValid() ? '#user-welcome' : '#user-login').html())
   // if (isUserValid()) {
@@ -150,6 +149,8 @@ const userGet = (e) => {
         $('#user-form').html(userTemplate)
         $('#username').focus()
         $('#cart').html('')
+
+        currentUser = null
       },
       error: (xhr, _, thrownError) => alert(`${xhr.status} -> ${thrownError}`)
     })

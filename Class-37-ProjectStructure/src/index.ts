@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 import helmet from 'helmet'
 import cluster from 'cluster'
 import cookieParser from 'cookie-parser'
-import localAuth from './auth/passportLocalAuth'
+import localAuth from './middlewares/passportLocalAuth'
 import compression from 'compression'
 import logger from './helpers/logHelper'
 
